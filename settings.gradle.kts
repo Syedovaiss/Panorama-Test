@@ -9,6 +9,12 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        google()
+        maven("https://repo.grails.org/grails/core/" )
+        maven("https://jitpack.io")
+        maven("https://maven.google.com")
+        mavenCentral()
+        maven("https://maven.fabric.io/public")
     }
 }
 plugins {
@@ -19,9 +25,17 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()
+        google()
+        maven("https://repo.grails.org/grails/core/" )
+        maven("https://jitpack.io")
+        maven("https://maven.google.com")
+        mavenCentral()
+        maven("https://maven.fabric.io/public")
     }
 }
 
 rootProject.name = "Panorama"
 include(":app")
 include(":open-cv")
+include(":camera_360")
