@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -12,12 +12,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.ovais.camera_360"
         minSdk = 26
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":open-cv"))
     // AndroidX
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
@@ -61,9 +57,6 @@ dependencies {
 
     // PanoramaGL
     implementation(libs.panoramagl)
-
-    // OpenCV (QuickBirdStudios)
-    implementation(libs.opencv)
 
     // Testing
     testImplementation(libs.junit)

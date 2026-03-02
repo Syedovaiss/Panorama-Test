@@ -15,6 +15,7 @@ appcompat = "1.7.1"
 
 opencv = "4.5.3.0"
 panoramagl = "1.14"
+material = "1.13.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,8 +42,9 @@ androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", versi
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
 panoramagl = { module = "com.github.hannesa2:panoramagl", version.ref = "panoramagl" }
 opencv = { module = "com.quickbirdstudios:opencv", version.ref = "opencv" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-

@@ -39,3 +39,4 @@ rootProject.name = "Panorama"
 include(":app")
 include(":open-cv")
 include(":camera_360")
+include(":panorama_strip")
