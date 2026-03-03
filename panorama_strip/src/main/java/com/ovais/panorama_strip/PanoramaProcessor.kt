@@ -2,65 +2,56 @@ package com.ovais.panorama_strip
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.Rect
 import androidx.core.graphics.createBitmap
+class PanoramaProcessor(
+    private val stripHeight: Int
+) {
 
-class PanoramaProcessor(private val stripHeight: Int) {
-    
     private var resultBitmap: Bitmap? = null
     private var canvas: Canvas? = null
     private var currentX = 0
     private val maxWidth = 20000
 
-    /**
-     * @param frame The latest camera frame
-     * @param pixelsToAdd Number of pixels to move forward based on rotation
-     */
-    fun processFrame(frame: Bitmap, pixelsToAdd: Int): Bitmap? {
-        if (pixelsToAdd <= 0) return resultBitmap // No movement, no new slice
+    private val fixedSliceWidth = 6   // smaller = sharper, smoother
+    private val paint = Paint(Paint.FILTER_BITMAP_FLAG) // high-quality scaling
+
+    fun processFrame(frame: Bitmap, verticalOffset: Int = 0): Bitmap? {
 
         if (resultBitmap == null) {
-            resultBitmap = createBitmap(maxWidth, stripHeight, Bitmap.Config.ARGB_8888)
+            resultBitmap = Bitmap.createBitmap(maxWidth, stripHeight, Bitmap.Config.ARGB_8888)
             canvas = Canvas(resultBitmap!!)
         }
 
-        if (currentX + pixelsToAdd >= maxWidth) {
-            return null
-        }
+        if (currentX + fixedSliceWidth >= maxWidth) return Bitmap.createBitmap(resultBitmap!!, 0, 0, currentX, stripHeight)
 
         val frameWidth = frame.width
         val frameHeight = frame.height
-        
-        // To get a clear image without stretching, we should ideally take a slice 
-        // that matches 'pixelsToAdd' in width from the center of the frame.
-        // If we take a fixed width slice but move 'pixelsToAdd', it stretches.
-        
+        val centerX = frameWidth / 2
+
+        // Apply vertical offset to reduce shaky lines
         val srcRect = Rect(
-            frameWidth / 2 - pixelsToAdd / 2, 
-            0, 
-            frameWidth / 2 + pixelsToAdd / 2, 
-            frameHeight
+            centerX - fixedSliceWidth / 2,
+            verticalOffset.coerceIn(0, frameHeight - 1),
+            centerX + fixedSliceWidth / 2,
+            (frameHeight + verticalOffset).coerceIn(1, frameHeight)
         )
-        
+
         val destRect = Rect(
-            currentX, 
-            0, 
-            currentX + pixelsToAdd, 
+            currentX,
+            0,
+            currentX + fixedSliceWidth,
             stripHeight
         )
 
-        // Using high-quality filtering
-        canvas?.drawBitmap(frame, srcRect, destRect, null)
-        currentX += pixelsToAdd
-        
-        return try {
-            Bitmap.createBitmap(resultBitmap!!, 0, 0, currentX, stripHeight)
-        } catch (e: Exception) {
-            resultBitmap
-        }
+        canvas?.drawBitmap(frame, srcRect, destRect, paint)
+        currentX += fixedSliceWidth
+
+        return Bitmap.createBitmap(resultBitmap!!, 0, 0, currentX, stripHeight)
     }
 
-    fun isFull(): Boolean = currentX >= maxWidth - 50
+    fun isFull(): Boolean = currentX >= maxWidth
 
     fun reset() {
         resultBitmap = null

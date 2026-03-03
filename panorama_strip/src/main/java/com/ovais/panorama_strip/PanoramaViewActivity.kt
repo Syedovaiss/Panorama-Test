@@ -1,16 +1,27 @@
 package com.ovais.panorama_strip
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTransformGestures
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,16 +42,25 @@ class PanoramaViewActivity : ComponentActivity() {
                     if (bitmap != null) {
                         Box(modifier = Modifier.fillMaxSize()) {
                             ZoomablePanorama(bitmap = bitmap)
-                            
+
                             IconButton(
                                 onClick = { finish() },
-                                modifier = Modifier.padding(16.dp).align(Alignment.TopStart)
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .align(Alignment.TopStart)
                             ) {
-                                Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+                                Icon(
+                                    Icons.AutoMirrored.Default.ArrowBack,
+                                    contentDescription = "Back",
+                                    tint = Color.White
+                                )
                             }
                         }
                     } else {
-                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
                             Text("No Image Found", color = Color.White)
                         }
                     }
@@ -51,19 +71,29 @@ class PanoramaViewActivity : ComponentActivity() {
 }
 
 @Composable
-fun ZoomablePanorama(bitmap: android.graphics.Bitmap) {
-    var scale by remember { mutableStateOf(1f) }
-    var offsetX by remember { mutableStateOf(0f) }
-    var offsetY by remember { mutableStateOf(0f) }
+fun ZoomablePanorama(bitmap: Bitmap) {
+    var scale by remember { mutableFloatStateOf(1f) }
+    var offsetX by remember { mutableFloatStateOf(0f) }
+    var offsetY by remember { mutableFloatStateOf(0f) }
+
+    val minScale = 1f
+    val maxScale = 5f
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .pointerInput(Unit) {
                 detectTransformGestures { _, pan, zoom, _ ->
-                    scale = (scale * zoom).coerceIn(1f, 5f)
-                    offsetX += pan.x
-                    offsetY += pan.y
+                    // Update scale
+                    scale = (scale * zoom).coerceIn(minScale, maxScale)
+
+                    // Calculate maximum offsets to prevent overscroll
+                    val maxOffsetX = ((bitmap.width * scale - size.width) / 2f).coerceAtLeast(0f)
+                    val maxOffsetY = ((bitmap.height * scale - size.height) / 2f).coerceAtLeast(0f)
+
+                    // Update offsets with constraints
+                    offsetX = (offsetX + pan.x).coerceIn(-maxOffsetX, maxOffsetX)
+                    offsetY = (offsetY + pan.y).coerceIn(-maxOffsetY, maxOffsetY)
                 }
             }
     ) {

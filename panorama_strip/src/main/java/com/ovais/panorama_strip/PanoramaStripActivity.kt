@@ -20,25 +20,42 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.*
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -46,7 +63,6 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.OutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.abs
@@ -60,13 +76,7 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
     private var rotationSensor: Sensor? = null
-    private var lastYaw: Float = 0f
     private var isFirstYaw = true
-    
-    // Pixels per degree of rotation. 
-    // This value controls the "stretch". If it's too high, the image is stretched. 
-    // If too low, it's squashed. ~15-20 is typical for mobile cameras.
-    private val pixelsPerDegree = 18f 
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -82,10 +92,14 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
         // We use a high height for quality. The processor will handle scaling.
         processor = PanoramaProcessor(1080)
 
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
 
@@ -98,7 +112,11 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
 
     @Composable
     fun PanoramaCaptureScreen() {
-        Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+        ) {
             CameraPreview(
                 modifier = Modifier.fillMaxSize()
             )
@@ -125,10 +143,13 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
                             .background(Color.DarkGray.copy(alpha = 0.3f))
                     )
 
-                    panoramaBitmap.value?.let { it ->
+                    panoramaBitmap.value?.let { bitmap ->
                         val scrollState = rememberScrollState()
-                        LaunchedEffect(it.width) {
-                            scrollState.animateScrollTo(it.width)
+
+                        LaunchedEffect(bitmap.width) {
+                            if (!processor.isFull()) {
+                                scrollState.animateScrollTo(bitmap.width)
+                            }
                         }
 
                         Row(
@@ -138,7 +159,7 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
                                 .horizontalScroll(scrollState)
                         ) {
                             Image(
-                                bitmap = it.asImageBitmap(),
+                                bitmap = bitmap.asImageBitmap(),
                                 contentDescription = null,
                                 modifier = Modifier.fillMaxHeight(),
                                 contentScale = ContentScale.FillHeight
@@ -147,16 +168,21 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
                     }
 
                     // Guide Line
-                    Box(modifier = Modifier.fillMaxHeight(0.75f).width(2.dp).background(Color.Yellow))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxHeight(0.75f)
+                            .width(2.dp)
+                            .background(Color.Yellow)
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(40.dp))
 
                 // Shutter
                 Button(
-                    onClick = { 
+                    onClick = {
                         if (isCapturing.value) {
-                            isCapturing.value = false 
+                            isCapturing.value = false
                             saveAndShowPanorama()
                         } else {
                             processor.reset()
@@ -173,7 +199,11 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
                     contentPadding = PaddingValues(0.dp)
                 ) {
                     if (isCapturing.value) {
-                        Box(Modifier.size(30.dp).background(Color.White, shape = RoundedCornerShape(4.dp)))
+                        Box(
+                            Modifier
+                                .size(30.dp)
+                                .background(Color.White, shape = RoundedCornerShape(4.dp))
+                        )
                     }
                 }
             }
@@ -183,7 +213,7 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
     @Composable
     fun CameraPreview(modifier: Modifier = Modifier) {
         val context = LocalContext.current
-        val lifecycleOwner = LocalLifecycleOwner.current
+        val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
         val previewView = remember { PreviewView(context) }
 
         AndroidView(
@@ -202,9 +232,9 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
                     .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
                     .build()
                     .also { analyzer ->
-                        analyzer.setAnalyzer(ContextCompat.getMainExecutor(context)) { imageProxy ->
+                        analyzer.setAnalyzer(cameraExecutor) { imageProxy ->
                             val bitmap = imageProxy.toBitmap()
-                            if (bitmap != null) {
+                            bitmap?.let {
                                 val rotation = imageProxy.imageInfo.rotationDegrees
                                 val matrix = Matrix().apply { postRotate(rotation.toFloat()) }
                                 currentFrame = Bitmap.createBitmap(
@@ -232,41 +262,60 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
 
     private var currentFrame: Bitmap? = null
 
+    private var lastYaw = 0f
+    private var lastPitch = 0f
+    private var isFirstReading = true
+    private var smoothedYaw = 0f
+    private var smoothedPitch = 0f
+    private val alpha = 0.08f   // low-pass smoothing factor
+
     override fun onSensorChanged(event: SensorEvent) {
         if (!isCapturing.value || event.sensor.type != Sensor.TYPE_ROTATION_VECTOR) return
 
         val rotationMatrix = FloatArray(9)
         SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+
         val orientation = FloatArray(3)
         SensorManager.getOrientation(rotationMatrix, orientation)
-        
-        val yaw = Math.toDegrees(orientation[0].toDouble()).toFloat()
 
-        if (isFirstYaw) {
+        var yaw = Math.toDegrees(orientation[0].toDouble()).toFloat()
+        val pitch = Math.toDegrees(orientation[1].toDouble()).toFloat()
+
+        // Wrap yaw
+        if (yaw - lastYaw > 180f) yaw -= 360f
+        if (yaw - lastYaw < -180f) yaw += 360f
+
+        // Low-pass smoothing
+        smoothedYaw = alpha * yaw + (1 - alpha) * smoothedYaw
+        smoothedPitch = alpha * pitch + (1 - alpha) * smoothedPitch
+
+        if (isFirstReading) {
+            smoothedYaw = yaw
+            smoothedPitch = pitch
+            isFirstReading = false
             lastYaw = yaw
-            isFirstYaw = false
+            lastPitch = pitch
             return
         }
 
-        val yawDiff = yaw - lastYaw
-        // We only care about movement in one direction for now (e.g. left to right)
-        // Or we can handle both. Let's handle just absolute movement for simplicity.
-        val absDiff = abs(yawDiff)
-        
-        // Threshold to avoid noise
-        if (absDiff > 0.05f) {
-            val pixelsToAdd = (absDiff * pixelsPerDegree).toInt()
-            if (pixelsToAdd >= 1) {
-                currentFrame?.let { frame ->
-                    val updated = processor.processFrame(frame, pixelsToAdd)
-                    if (updated != null) {
-                        panoramaBitmap.value = updated
-                    } else if (processor.isFull()) {
-                        isCapturing.value = false
-                        saveAndShowPanorama()
-                    }
+        val yawDiff = smoothedYaw - lastYaw
+        lastYaw = smoothedYaw
+        lastPitch = smoothedPitch
+
+        // Only move when enough rotation
+        if (abs(yawDiff) > 0.2f) {
+            currentFrame?.let { frame ->
+                // Map pitch to vertical offset (-5px to +5px)
+                val maxOffset = 5
+                val verticalOffset = ((smoothedPitch / 10f) * maxOffset).toInt()
+
+                val updated = processor.processFrame(frame, verticalOffset)
+                if (updated != null) panoramaBitmap.value = updated
+
+                if (processor.isFull()) {
+                    isCapturing.value = false
+                    saveAndShowPanorama()
                 }
-                lastYaw = yaw
             }
         }
     }
@@ -276,12 +325,20 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
     private fun saveAndShowPanorama() {
         val bitmap = panoramaBitmap.value ?: return
         PanoramaResultHolder.bitmap = bitmap
-        
+
         lifecycleScope.launch(Dispatchers.IO) {
-            val success = saveBitmapToGallery(this@PanoramaStripActivity, bitmap, "Panorama_${System.currentTimeMillis()}")
+            val success = saveBitmapToGallery(
+                this@PanoramaStripActivity,
+                bitmap,
+                "Panorama_${System.currentTimeMillis()}"
+            )
             withContext(Dispatchers.Main) {
                 if (success) {
-                    Toast.makeText(this@PanoramaStripActivity, "Panorama saved!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@PanoramaStripActivity,
+                        "Panorama saved!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 startActivity(Intent(this@PanoramaStripActivity, PanoramaViewActivity::class.java))
             }
@@ -312,13 +369,20 @@ class PanoramaStripActivity : ComponentActivity(), SensorEventListener {
                 true
             } ?: false
         } catch (e: Exception) {
+            Log.e(PanoramaStripActivity::class.java.simpleName, e.stackTraceToString())
             false
         }
     }
 
     override fun onResume() {
         super.onResume()
-        rotationSensor?.let { sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI) }
+        rotationSensor?.let {
+            sensorManager.registerListener(
+                this,
+                it,
+                SensorManager.SENSOR_DELAY_UI
+            )
+        }
     }
 
     override fun onPause() {
