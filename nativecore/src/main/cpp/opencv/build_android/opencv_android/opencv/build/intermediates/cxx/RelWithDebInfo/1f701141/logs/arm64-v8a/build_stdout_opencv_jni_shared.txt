@@ -1,0 +1,2 @@
+ninja: Entering directory `/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/.cxx/RelWithDebInfo/1f701141/arm64-v8a'
+ninja: no work to do.

@@ -1,2 +1,0 @@
-ninja: Entering directory `/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/open-cv/.cxx/Debug/p1a354f6/x86'
-ninja: no work to do.

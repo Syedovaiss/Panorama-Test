@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "org.opencv.samples.recorder.video-recorder-debug-5:/layout_recorder_surface_view.xml.flat",
+        "source": "org.opencv.samples.recorder.video-recorder-video-recorder-7:/layout/recorder_surface_view.xml"
+    },
+    {
+        "merged": "org.opencv.samples.recorder.video-recorder-debug-5:/drawable_icon.png.flat",
+        "source": "org.opencv.samples.recorder.video-recorder-video-recorder-7:/drawable/icon.png"
+    }
+]

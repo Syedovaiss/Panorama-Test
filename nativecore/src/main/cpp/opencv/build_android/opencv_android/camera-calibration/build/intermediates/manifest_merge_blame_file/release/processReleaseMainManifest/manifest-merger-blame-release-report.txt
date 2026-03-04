@@ -1,0 +1,85 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="org.opencv.samples.cameracalibration"
+4    android:versionCode="301"
+5    android:versionName="3.01" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="34" />
+10
+11    <supports-screens
+11-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:23:5-27:51
+12        android:anyDensity="true"
+12-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:27:23-48
+13        android:largeScreens="true"
+13-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:26:23-50
+14        android:normalScreens="true"
+14-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:25:23-51
+15        android:resizeable="true"
+15-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:23:23-48
+16        android:smallScreens="true" />
+16-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:24:23-50
+17
+18    <uses-permission android:name="android.permission.CAMERA" />
+18-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:29:5-64
+18-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:29:22-62
+19
+20    <uses-feature
+20-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:31:5-84
+21        android:name="android.hardware.camera"
+21-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:31:19-57
+22        android:required="false" />
+22-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:31:58-82
+23    <uses-feature
+23-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:32:5-94
+24        android:name="android.hardware.camera.autofocus"
+24-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:32:19-67
+25        android:required="false" />
+25-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:32:68-92
+26    <uses-feature
+26-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:33:5-90
+27        android:name="android.hardware.camera.front"
+27-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:33:19-63
+28        android:required="false" />
+28-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:33:64-88
+29    <uses-feature
+29-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:34:5-100
+30        android:name="android.hardware.camera.front.autofocus"
+30-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:34:19-73
+31        android:required="false" />
+31-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:34:74-98
+32
+33    <application
+33-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:6:5-21:19
+34        android:extractNativeLibs="false"
+35        android:icon="@drawable/icon"
+35-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:8:9-38
+36        android:label="@string/app_name" >
+36-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:7:9-41
+37        <activity
+37-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:10:9-20:20
+38            android:name="org.opencv.samples.cameracalibration.CameraCalibrationActivity"
+38-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:12:19-59
+39            android:configChanges="keyboardHidden|orientation"
+39-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:15:19-69
+40            android:exported="true"
+40-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:11:19-42
+41            android:label="@string/app_name"
+41-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:13:19-51
+42            android:screenOrientation="landscape" >
+42-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:14:19-56
+43            <intent-filter>
+43-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:16:13-19:29
+44                <action android:name="android.intent.action.MAIN" />
+44-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:17:17-69
+44-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:17:25-66
+45
+46                <category android:name="android.intent.category.LAUNCHER" />
+46-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:18:17-77
+46-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/camera-calibration/gradle/AndroidManifest.xml:18:27-74
+47            </intent-filter>
+48        </activity>
+49    </application>
+50
+51</manifest>

@@ -1,0 +1,8 @@
+R_DEF: Internal format may change without notice
+local
+drawable icon
+id CameraView
+layout activity_main
+raw deploy
+raw mobilenet_iter_73000
+string app_name

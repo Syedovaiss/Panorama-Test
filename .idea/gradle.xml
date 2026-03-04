@@ -11,8 +11,10 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/camera_360" />
+            <option value="$PROJECT_DIR$/nativecore" />
             <option value="$PROJECT_DIR$/open-cv" />
             <option value="$PROJECT_DIR$/panorama_strip" />
+            <option value="$PROJECT_DIR$/panoramacv" />
           </set>
         </option>
       </GradleProjectSettings>

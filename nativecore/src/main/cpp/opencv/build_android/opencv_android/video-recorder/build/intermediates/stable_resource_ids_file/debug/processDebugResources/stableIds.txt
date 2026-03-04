@@ -1,0 +1,13 @@
+org.opencv.samples.recorder:string/app_name = 0x7f050000
+org.opencv.samples.recorder:layout/recorder_surface_view = 0x7f040000
+org.opencv.samples.recorder:id/recorder_activity_java_surface_view = 0x7f030005
+org.opencv.samples.recorder:id/textview1 = 0x7f030006
+org.opencv.samples.recorder:id/image_view = 0x7f030004
+org.opencv.samples.recorder:id/front = 0x7f030003
+org.opencv.samples.recorder:id/any = 0x7f030000
+org.opencv.samples.recorder:id/btn1 = 0x7f030002
+org.opencv.samples.recorder:styleable/CameraBridgeViewBase = 0x7f060000
+org.opencv.samples.recorder:attr/camera_id = 0x7f010000
+org.opencv.samples.recorder:drawable/icon = 0x7f020000
+org.opencv.samples.recorder:attr/show_fps = 0x7f010001
+org.opencv.samples.recorder:id/back = 0x7f030001

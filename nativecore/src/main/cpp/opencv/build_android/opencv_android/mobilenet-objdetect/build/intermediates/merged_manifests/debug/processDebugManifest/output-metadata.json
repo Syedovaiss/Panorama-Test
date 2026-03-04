@@ -1,0 +1,25 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "MERGED_MANIFESTS",
+    "kind": "Directory"
+  },
+  "applicationId": "org.opencv.samples.opencv_mobilenet",
+  "variantName": "debug",
+  "elements": [
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "arm64-v8a"
+        }
+      ],
+      "attributes": [],
+      "versionCode": 341,
+      "versionName": "3.41",
+      "outputFile": "arm64-v8a/AndroidManifest.xml"
+    }
+  ],
+  "elementType": "File"
+}

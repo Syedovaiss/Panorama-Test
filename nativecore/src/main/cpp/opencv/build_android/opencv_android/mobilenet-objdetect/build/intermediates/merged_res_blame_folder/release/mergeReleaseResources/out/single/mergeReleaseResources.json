@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "org.opencv.samples.opencv_mobilenet.mobilenet-objdetect-release-4:/drawable_icon.png.flat",
+        "source": "org.opencv.samples.opencv_mobilenet.mobilenet-objdetect-mobilenet-objdetect-7:/drawable/icon.png"
+    },
+    {
+        "merged": "org.opencv.samples.opencv_mobilenet.mobilenet-objdetect-release-4:/layout_activity_main.xml.flat",
+        "source": "org.opencv.samples.opencv_mobilenet.mobilenet-objdetect-mobilenet-objdetect-7:/layout/activity_main.xml"
+    },
+    {
+        "merged": "org.opencv.samples.opencv_mobilenet.mobilenet-objdetect-release-4:/raw_deploy.prototxt.flat",
+        "source": "org.opencv.samples.opencv_mobilenet.mobilenet-objdetect-mobilenet-objdetect-7:/raw/deploy.prototxt"
+    },
+    {
+        "merged": "org.opencv.samples.opencv_mobilenet.mobilenet-objdetect-release-4:/raw_mobilenet_iter_73000.caffemodel.flat",
+        "source": "org.opencv.samples.opencv_mobilenet.mobilenet-objdetect-mobilenet-objdetect-7:/raw/mobilenet_iter_73000.caffemodel"
+    }
+]

@@ -1,0 +1,9 @@
+R_DEF: Internal format may change without notice
+local
+drawable icon
+id btn1
+id image_view
+id recorder_activity_java_surface_view
+id textview1
+layout recorder_surface_view
+string app_name

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "org.opencv.samples.colorblobdetect.color-blob-detection-debug-4:/layout_color_blob_detection_surface_view.xml.flat",
+        "source": "org.opencv.samples.colorblobdetect.color-blob-detection-color-blob-detection-7:/layout/color_blob_detection_surface_view.xml"
+    },
+    {
+        "merged": "org.opencv.samples.colorblobdetect.color-blob-detection-debug-4:/drawable_icon.png.flat",
+        "source": "org.opencv.samples.colorblobdetect.color-blob-detection-color-blob-detection-7:/drawable/icon.png"
+    }
+]

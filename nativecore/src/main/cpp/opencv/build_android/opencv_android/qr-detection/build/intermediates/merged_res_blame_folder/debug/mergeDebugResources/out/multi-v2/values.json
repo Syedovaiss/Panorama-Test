@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "org.opencv.samples.qrdetection.qr-detection-mergeDebugResources-3:/values/values.xml",
+            "map": [
+                {
+                    "source": "/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "9",
+                        "endColumns": "24",
+                        "endOffsets": "361"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "111",
+                        "endLines": "10",
+                        "endColumns": "24",
+                        "endOffsets": "417"
+                    }
+                },
+                {
+                    "source": "/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/qr-detection/res/values/strings.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}

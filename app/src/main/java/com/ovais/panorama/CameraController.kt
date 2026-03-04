@@ -1,10 +1,7 @@
 package com.ovais.panorama
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
 import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraCharacteristics
@@ -12,19 +9,18 @@ import android.hardware.camera2.CameraDevice
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CameraMetadata
 import android.hardware.camera2.CaptureRequest
-import android.media.Image
 import android.media.ImageReader
 import android.os.Handler
 import android.os.HandlerThread
 import android.view.Surface
 import android.view.TextureView
 import androidx.annotation.RequiresPermission
+
 class CameraController(
     private val context: Context,
     private val previewView: TextureView,
     private val onFrameAvailable: (ByteArray, Int, Int) -> Unit
 ) {
-
     private val cameraManager =
         context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
 

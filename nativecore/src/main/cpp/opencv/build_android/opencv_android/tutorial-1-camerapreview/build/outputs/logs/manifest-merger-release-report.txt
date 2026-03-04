@@ -1,0 +1,97 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:2:1-38:12
+INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:2:1-38:12
+INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:2:1-38:12
+INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:2:1-38:12
+MERGED from [:opencv] /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml:2:1-7:12
+	package
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:3:11-49
+		INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:2:11-69
+application
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:6:5-21:19
+INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:6:5-21:19
+	android:extractNativeLibs
+		INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml
+	android:label
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:7:9-41
+	android:icon
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:8:9-38
+	android:theme
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:9:9-67
+activity#org.opencv.samples.tutorial1.Tutorial1Activity
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:11:9-20:20
+	android:label
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:14:19-51
+	android:exported
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:12:19-42
+	android:configChanges
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:15:19-69
+	android:name
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:13:19-51
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:16:13-19:29
+action#android.intent.action.MAIN
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:17:17-69
+	android:name
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:17:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:18:17-77
+	android:name
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:18:27-74
+supports-screens
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:23:5-27:51
+	android:largeScreens
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:26:23-50
+	android:smallScreens
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:24:23-50
+	android:normalScreens
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:25:23-51
+	android:resizeable
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:23:23-48
+	android:anyDensity
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:27:23-48
+uses-permission#android.permission.CAMERA
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:30:5-64
+	android:name
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:30:22-62
+uses-feature#android.hardware.camera
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:32:5-84
+	android:required
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:32:58-82
+	android:name
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:32:19-57
+uses-feature#android.hardware.camera.autofocus
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:33:5-94
+	android:required
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:33:68-92
+	android:name
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:33:19-67
+uses-feature#android.hardware.camera.front
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:34:5-90
+	android:required
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:34:64-88
+	android:name
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:34:19-63
+uses-feature#android.hardware.camera.front.autofocus
+ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:35:5-100
+	android:required
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:35:74-98
+	android:name
+		ADDED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml:35:19-73
+uses-sdk
+INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml
+INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml
+MERGED from [:opencv] /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml:5:5-44
+MERGED from [:opencv] /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml:5:5-44
+	android:targetSdkVersion
+		INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/tutorial-1-camerapreview/gradle/AndroidManifest.xml

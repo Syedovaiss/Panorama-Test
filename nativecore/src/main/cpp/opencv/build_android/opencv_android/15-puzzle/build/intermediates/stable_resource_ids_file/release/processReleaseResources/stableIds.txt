@@ -1,0 +1,10 @@
+org.opencv.samples.puzzle15:styleable/CameraBridgeViewBase = 0x7f050000
+org.opencv.samples.puzzle15:string/menu_toggle_tile_numbers = 0x7f040002
+org.opencv.samples.puzzle15:id/front = 0x7f030002
+org.opencv.samples.puzzle15:drawable/icon = 0x7f020000
+org.opencv.samples.puzzle15:id/any = 0x7f030000
+org.opencv.samples.puzzle15:string/app_name = 0x7f040000
+org.opencv.samples.puzzle15:attr/show_fps = 0x7f010001
+org.opencv.samples.puzzle15:string/menu_start_new_game = 0x7f040001
+org.opencv.samples.puzzle15:id/back = 0x7f030001
+org.opencv.samples.puzzle15:attr/camera_id = 0x7f010000

@@ -1,0 +1,4 @@
+#Wed Mar 04 11:44:20 PKT 2026
+base.0=/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/qr-detection/build/intermediates/dex/release/mergeDexRelease/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

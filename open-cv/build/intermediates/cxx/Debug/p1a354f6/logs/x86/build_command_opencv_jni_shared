@@ -1,4 +1,0 @@
-/Users/syedovaisakhtar/Library/Android/sdk/cmake/3.22.1/bin/ninja \
-  -C \
-  /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/open-cv/.cxx/Debug/p1a354f6/x86 \
-  opencv_jni_shared

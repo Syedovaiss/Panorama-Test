@@ -1,0 +1,41 @@
+PORTED FUNCs LIST (32 of 32):
+
+  cv::Animation::Animation(int loopCount = 0, Scalar bgColor = Scalar())
+int Animation::loop_count
+void Animation::loop_count
+Scalar Animation::bgcolor
+void Animation::bgcolor
+vector_int Animation::durations
+void Animation::durations
+vector_Mat Animation::frames
+void Animation::frames
+Mat Animation::still_image
+void Animation::still_image
+ Mat cv::imread(String filename, int flags = IMREAD_COLOR_BGR)
+ void cv::imread(String filename, Mat& dst, int flags = IMREAD_COLOR_BGR)
+ Mat cv::imreadWithMetadata(String filename, vector_int& metadataTypes, vector_Mat& metadata, int flags = IMREAD_ANYCOLOR)
+ bool cv::imreadmulti(String filename, vector_Mat& mats, int flags = IMREAD_ANYCOLOR)
+ bool cv::imreadmulti(String filename, vector_Mat& mats, int start, int count, int flags = IMREAD_ANYCOLOR)
+ bool cv::imreadanimation(String filename, Animation& animation, int start = 0, int count = INT16_MAX)
+ bool cv::imdecodeanimation(Mat buf, Animation& animation, int start = 0, int count = INT16_MAX)
+ bool cv::imwriteanimation(String filename, Animation animation, vector_int params = std::vector<int>())
+ bool cv::imencodeanimation(String ext, Animation animation, vector_uchar& buf, vector_int params = std::vector<int>())
+ size_t cv::imcount(String filename, int flags = IMREAD_ANYCOLOR)
+ bool cv::imwrite(String filename, Mat img, vector_int params = std::vector<int>())
+ bool cv::imwriteWithMetadata(String filename, Mat img, vector_int metadataTypes, vector_Mat metadata, vector_int params = std::vector<int>())
+ bool cv::imwritemulti(String filename, vector_Mat img, vector_int params = std::vector<int>())
+ Mat cv::imdecode(Mat buf, int flags)
+ Mat cv::imdecodeWithMetadata(Mat buf, vector_int& metadataTypes, vector_Mat& metadata, int flags = IMREAD_ANYCOLOR)
+ bool cv::imdecodemulti(Mat buf, int flags, vector_Mat& mats, Range range = Range::all())
+ bool cv::imencode(String ext, Mat img, vector_uchar& buf, vector_int params = std::vector<int>())
+ bool cv::imencodeWithMetadata(String ext, Mat img, vector_int metadataTypes, vector_Mat metadata, vector_uchar& buf, vector_int params = std::vector<int>())
+ bool cv::imencodemulti(String ext, vector_Mat imgs, vector_uchar& buf, vector_int params = std::vector<int>())
+ bool cv::haveImageReader(String filename)
+ bool cv::haveImageWriter(String filename)
+
+SKIPPED FUNCs LIST (0 of 32):
+
+
+0 def args - 3 funcs
+1 def args - 16 funcs
+2 def args - 3 funcs

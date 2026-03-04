@@ -1,0 +1,189 @@
+Compilation failed:
+    source file: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_dotprod.cpp'
+    check option: ''
+===== BUILD LOG =====
+Change Dir: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_c03f8/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_c03f8.dir/build.make CMakeFiles/cmTC_c03f8.dir/build
+Building CXX object CMakeFiles/cmTC_c03f8.dir/cpu_neon_dotprod.cpp.o
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android26 --sysroot=/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security    -O3 -DNDEBUG  -std=c++11 -fPIE -MD -MT CMakeFiles/cmTC_c03f8.dir/cpu_neon_dotprod.cpp.o -MF CMakeFiles/cmTC_c03f8.dir/cpu_neon_dotprod.cpp.o.d -o CMakeFiles/cmTC_c03f8.dir/cpu_neon_dotprod.cpp.o -c /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_dotprod.cpp
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_dotprod.cpp:12:24: error: always_inline function 'vdotq_u32' requires target feature 'dotprod', but would be inlined into function 'test' that is compiled without support for 'dotprod'
+   12 |     uint32x4_t v_dst = vdotq_u32(v_src, v_m0, v_m1);
+      |                        ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_c03f8.dir/cpu_neon_dotprod.cpp.o] Error 1
+make: *** [cmTC_c03f8/fast] Error 2
+
+
+===== END =====
+
+Compilation failed:
+    source file: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_fp16.cpp'
+    check option: ''
+===== BUILD LOG =====
+Change Dir: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_c19e2/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_c19e2.dir/build.make CMakeFiles/cmTC_c19e2.dir/build
+Building CXX object CMakeFiles/cmTC_c19e2.dir/cpu_neon_fp16.cpp.o
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android26 --sysroot=/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security    -O3 -DNDEBUG  -std=c++11 -fPIE -MD -MT CMakeFiles/cmTC_c19e2.dir/cpu_neon_fp16.cpp.o -MF CMakeFiles/cmTC_c19e2.dir/cpu_neon_fp16.cpp.o.d -o CMakeFiles/cmTC_c19e2.dir/cpu_neon_fp16.cpp.o -c /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_fp16.cpp
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_fp16.cpp:27:21: error: always_inline function 'vsubq_f16' requires target feature 'fullfp16', but would be inlined into function 'test' that is compiled without support for 'fullfp16'
+   27 |     float16x8_t d = vsubq_f16(s1, s1);
+      |                     ^
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_fp16.cpp:28:9: error: '__builtin_neon_vfmaq_laneq_f16' needs target feature fullfp16
+   28 |     d = vfmaq_laneq_f16(d, s1, s2, 0);
+      |         ^
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/19/include/arm_neon.h:63451:25: note: expanded from macro 'vfmaq_laneq_f16'
+ 63451 |   __ret = (float16x8_t) __builtin_neon_vfmaq_laneq_f16((int8x16_t)__s0, (int8x16_t)__s1, (int8x16_t)__s2, __p3, 40); \
+       |                         ^
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_fp16.cpp:29:9: error: '__builtin_neon_vfmaq_laneq_f16' needs target feature fullfp16
+   29 |     d = vfmaq_laneq_f16(d, s1, s2, 1);
+      |         ^
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/19/include/arm_neon.h:63451:25: note: expanded from macro 'vfmaq_laneq_f16'
+ 63451 |   __ret = (float16x8_t) __builtin_neon_vfmaq_laneq_f16((int8x16_t)__s0, (int8x16_t)__s1, (int8x16_t)__s2, __p3, 40); \
+       |                         ^
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_fp16.cpp:30:9: error: '__builtin_neon_vfmaq_laneq_f16' needs target feature fullfp16
+   30 |     d = vfmaq_laneq_f16(d, s1, s2, 2);
+      |         ^
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/19/include/arm_neon.h:63451:25: note: expanded from macro 'vfmaq_laneq_f16'
+ 63451 |   __ret = (float16x8_t) __builtin_neon_vfmaq_laneq_f16((int8x16_t)__s0, (int8x16_t)__s1, (int8x16_t)__s2, __p3, 40); \
+       |                         ^
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_fp16.cpp:31:9: error: '__builtin_neon_vfmaq_laneq_f16' needs target feature fullfp16
+   31 |     d = vfmaq_laneq_f16(d, s1, s2, 3);
+      |         ^
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/19/include/arm_neon.h:63451:25: note: expanded from macro 'vfmaq_laneq_f16'
+ 63451 |   __ret = (float16x8_t) __builtin_neon_vfmaq_laneq_f16((int8x16_t)__s0, (int8x16_t)__s1, (int8x16_t)__s2, __p3, 40); \
+       |                         ^
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_fp16.cpp:32:9: error: '__builtin_neon_vfmaq_laneq_f16' needs target feature fullfp16
+   32 |     d = vfmaq_laneq_f16(d, s1, s2, 4);
+      |         ^
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/19/include/arm_neon.h:63451:25: note: expanded from macro 'vfmaq_laneq_f16'
+ 63451 |   __ret = (float16x8_t) __builtin_neon_vfmaq_laneq_f16((int8x16_t)__s0, (int8x16_t)__s1, (int8x16_t)__s2, __p3, 40); \
+       |                         ^
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_fp16.cpp:33:9: error: '__builtin_neon_vfmaq_laneq_f16' needs target feature fullfp16
+   33 |     d = vfmaq_laneq_f16(d, s1, s2, 5);
+      |         ^
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/19/include/arm_neon.h:63451:25: note: expanded from macro 'vfmaq_laneq_f16'
+ 63451 |   __ret = (float16x8_t) __builtin_neon_vfmaq_laneq_f16((int8x16_t)__s0, (int8x16_t)__s1, (int8x16_t)__s2, __p3, 40); \
+       |                         ^
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_fp16.cpp:34:9: error: '__builtin_neon_vfmaq_laneq_f16' needs target feature fullfp16
+   34 |     d = vfmaq_laneq_f16(d, s1, s2, 6);
+      |         ^
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/19/include/arm_neon.h:63451:25: note: expanded from macro 'vfmaq_laneq_f16'
+ 63451 |   __ret = (float16x8_t) __builtin_neon_vfmaq_laneq_f16((int8x16_t)__s0, (int8x16_t)__s1, (int8x16_t)__s2, __p3, 40); \
+       |                         ^
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_fp16.cpp:35:9: error: '__builtin_neon_vfmaq_laneq_f16' needs target feature fullfp16
+   35 |     d = vfmaq_laneq_f16(d, s1, s2, 7);
+      |         ^
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/19/include/arm_neon.h:63451:25: note: expanded from macro 'vfmaq_laneq_f16'
+ 63451 |   __ret = (float16x8_t) __builtin_neon_vfmaq_laneq_f16((int8x16_t)__s0, (int8x16_t)__s1, (int8x16_t)__s2, __p3, 40); \
+       |                         ^
+9 errors generated.
+make[1]: *** [CMakeFiles/cmTC_c19e2.dir/cpu_neon_fp16.cpp.o] Error 1
+make: *** [cmTC_c19e2/fast] Error 2
+
+
+===== END =====
+
+Compilation failed:
+    source file: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_bf16.cpp'
+    check option: ''
+===== BUILD LOG =====
+Change Dir: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_96932/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_96932.dir/build.make CMakeFiles/cmTC_96932.dir/build
+Building CXX object CMakeFiles/cmTC_96932.dir/cpu_neon_bf16.cpp.o
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android26 --sysroot=/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security    -O3 -DNDEBUG  -std=c++11 -fPIE -MD -MT CMakeFiles/cmTC_96932.dir/cpu_neon_bf16.cpp.o -MF CMakeFiles/cmTC_96932.dir/cpu_neon_bf16.cpp.o.d -o CMakeFiles/cmTC_96932.dir/cpu_neon_bf16.cpp.o -c /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_bf16.cpp
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_bf16.cpp:14:26: error: always_inline function 'vcvt_bf16_f32' requires target feature 'bf16', but would be inlined into function 'vld1q_as_bf16' that is compiled without support for 'bf16'
+   14 |     return vcombine_bf16(vcvt_bf16_f32(s0), vcvt_bf16_f32(s1));
+      |                          ^
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_bf16.cpp:14:45: error: always_inline function 'vcvt_bf16_f32' requires target feature 'bf16', but would be inlined into function 'vld1q_as_bf16' that is compiled without support for 'bf16'
+   14 |     return vcombine_bf16(vcvt_bf16_f32(s0), vcvt_bf16_f32(s1));
+      |                                             ^
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/cmake/checks/cpu_neon_bf16.cpp:14:12: error: always_inline function 'vcombine_bf16' requires target feature 'bf16', but would be inlined into function 'vld1q_as_bf16' that is compiled without support for 'bf16'
+   14 |     return vcombine_bf16(vcvt_bf16_f32(s0), vcvt_bf16_f32(s1));
+      |            ^
+3 errors generated.
+make[1]: *** [CMakeFiles/cmTC_96932.dir/cpu_neon_bf16.cpp.o] Error 1
+make: *** [cmTC_96932/fast] Error 2
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unknown .*option'
+    Output line: 'warning: unknown warning option '-Wno-maybe-uninitialized', did you mean '-Wno-uninitialized'? [-Wunknown-warning-option]'
+Compilation failed:
+    source file: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp/src.c'
+    check option: ' -Wno-maybe-uninitialized'
+===== BUILD LOG =====
+Change Dir: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_0098c/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_0098c.dir/build.make CMakeFiles/cmTC_0098c.dir/build
+Building C object CMakeFiles/cmTC_0098c.dir/src.c.o
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android26 --sysroot=/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security    -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wstrict-prototypes -Winit-self -Wpointer-arith -Wsign-promo -Wuninitialized -Winconsistent-missing-override -Wno-delete-non-virtual-dtor -Wno-unnamed-type-template-args -Wno-comment -Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion -fdiagnostics-show-option -Qunused-arguments -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -Wno-unused-but-set-variable -Wno-missing-prototypes -Wno-missing-declarations -Wno-undef -Wno-unused -Wno-sign-compare -Wno-cast-align -Wno-shadow  -O3 -DNDEBUG   -DNDEBUG -fPIE    -Wno-maybe-uninitialized -MD -MT CMakeFiles/cmTC_0098c.dir/src.c.o -MF CMakeFiles/cmTC_0098c.dir/src.c.o.d -o CMakeFiles/cmTC_0098c.dir/src.c.o -c /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp/src.c
+warning: unknown warning option '-Wno-maybe-uninitialized'; did you mean '-Wno-uninitialized'? [-Wunknown-warning-option]
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp/src.c:1:8: warning: unknown pragma ignored [-Wunknown-pragmas]
+    1 | #pragma
+      |        ^
+2 warnings generated.
+Linking C executable cmTC_0098c
+/opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0098c.dir/link.txt --verbose=1
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=aarch64-none-linux-android26 --sysroot=/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security    -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wstrict-prototypes -Winit-self -Wpointer-arith -Wsign-promo -Wuninitialized -Winconsistent-missing-override -Wno-delete-non-virtual-dtor -Wno-unnamed-type-template-args -Wno-comment -Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion -fdiagnostics-show-option -Qunused-arguments -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -Wno-unused-but-set-variable -Wno-missing-prototypes -Wno-missing-declarations -Wno-undef -Wno-unused -Wno-sign-compare -Wno-cast-align -Wno-shadow  -O3 -DNDEBUG   -DNDEBUG -static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments    -Wl,--gc-sections -Wl,--as-needed -Wl,--no-undefined  -Wl,--gc-sections  CMakeFiles/cmTC_0098c.dir/src.c.o -o cmTC_0098c  -latomic -lm
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unknown .*option'
+    Output line: 'warning: unknown warning option '-Wno-stringop-overflow', did you mean '-Wno-shift-overflow'? [-Wunknown-warning-option]'
+Compilation failed:
+    source file: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp/src.cxx'
+    check option: ' -Wno-stringop-overflow'
+===== BUILD LOG =====
+Change Dir: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8753a/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_8753a.dir/build.make CMakeFiles/cmTC_8753a.dir/build
+Building CXX object CMakeFiles/cmTC_8753a.dir/src.cxx.o
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android26 --sysroot=/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security     -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wstrict-prototypes -Winit-self -Wpointer-arith -Wuninitialized -Wno-delete-non-virtual-dtor -Wno-unnamed-type-template-args -Wno-comment -Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion -fdiagnostics-show-option -Qunused-arguments -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-prototypes -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-tautological-undefined-compare -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable -Wno-shorten-64-to-32 -Wno-invalid-offsetof -Wno-enum-compare-switch -Wno-suggest-override -Wno-inconsistent-missing-override -Wno-implicit-fallthrough -Wno-array-bounds  -O3 -DNDEBUG   -DNDEBUG -std=c++11 -fPIE    -Wno-stringop-overflow -MD -MT CMakeFiles/cmTC_8753a.dir/src.cxx.o -MF CMakeFiles/cmTC_8753a.dir/src.cxx.o.d -o CMakeFiles/cmTC_8753a.dir/src.cxx.o -c /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp/src.cxx
+warning: unknown warning option '-Wno-stringop-overflow'; did you mean '-Wno-shift-overflow'? [-Wunknown-warning-option]
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp/src.cxx:1:8: warning: unknown pragma ignored [-Wunknown-pragmas]
+    1 | #pragma
+      |        ^
+2 warnings generated.
+Linking CXX executable cmTC_8753a
+/opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8753a.dir/link.txt --verbose=1
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android26 --sysroot=/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security     -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wstrict-prototypes -Winit-self -Wpointer-arith -Wuninitialized -Wno-delete-non-virtual-dtor -Wno-unnamed-type-template-args -Wno-comment -Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion -fdiagnostics-show-option -Qunused-arguments -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-prototypes -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-tautological-undefined-compare -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable -Wno-shorten-64-to-32 -Wno-invalid-offsetof -Wno-enum-compare-switch -Wno-suggest-override -Wno-inconsistent-missing-override -Wno-implicit-fallthrough -Wno-array-bounds  -O3 -DNDEBUG   -DNDEBUG -static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments    -Wl,--gc-sections -Wl,--as-needed -Wl,--no-undefined  -Wl,--gc-sections  CMakeFiles/cmTC_8753a.dir/src.cxx.o -o cmTC_8753a  -latomic -lm
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unknown .*option'
+    Output line: 'warning: unknown warning option '-Wno-stringop-overread' [-Wunknown-warning-option]'
+Compilation failed:
+    source file: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp/src.cxx'
+    check option: ' -Wno-stringop-overread'
+===== BUILD LOG =====
+Change Dir: '/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_726bb/fast
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_726bb.dir/build.make CMakeFiles/cmTC_726bb.dir/build
+Building CXX object CMakeFiles/cmTC_726bb.dir/src.cxx.o
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android26 --sysroot=/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot   -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security     -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wstrict-prototypes -Winit-self -Wpointer-arith -Wuninitialized -Wno-delete-non-virtual-dtor -Wno-unnamed-type-template-args -Wno-comment -Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion -fdiagnostics-show-option -Qunused-arguments -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-prototypes -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-tautological-undefined-compare -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable -Wno-shorten-64-to-32 -Wno-invalid-offsetof -Wno-enum-compare-switch -Wno-suggest-override -Wno-inconsistent-missing-override -Wno-implicit-fallthrough -Wno-array-bounds  -O3 -DNDEBUG   -DNDEBUG -std=c++11 -fPIE    -Wno-stringop-overread -MD -MT CMakeFiles/cmTC_726bb.dir/src.cxx.o -MF CMakeFiles/cmTC_726bb.dir/src.cxx.o.d -o CMakeFiles/cmTC_726bb.dir/src.cxx.o -c /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp/src.cxx
+warning: unknown warning option '-Wno-stringop-overread' [-Wunknown-warning-option]
+/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/CMakeFiles/CMakeTmp/src.cxx:1:8: warning: unknown pragma ignored [-Wunknown-pragmas]
+    1 | #pragma
+      |        ^
+2 warnings generated.
+Linking CXX executable cmTC_726bb
+/opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_726bb.dir/link.txt --verbose=1
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android26 --sysroot=/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security     -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wstrict-prototypes -Winit-self -Wpointer-arith -Wuninitialized -Wno-delete-non-virtual-dtor -Wno-unnamed-type-template-args -Wno-comment -Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion -fdiagnostics-show-option -Qunused-arguments -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-prototypes -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-tautological-undefined-compare -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable -Wno-shorten-64-to-32 -Wno-invalid-offsetof -Wno-enum-compare-switch -Wno-suggest-override -Wno-inconsistent-missing-override -Wno-implicit-fallthrough -Wno-array-bounds  -O3 -DNDEBUG   -DNDEBUG -static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments    -Wl,--gc-sections -Wl,--as-needed -Wl,--no-undefined  -Wl,--gc-sections  CMakeFiles/cmTC_726bb.dir/src.cxx.o -o cmTC_726bb  -latomic -lm
+
+
+===== END =====
+

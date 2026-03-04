@@ -1,0 +1,7 @@
+org.opencv-pngs-0 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/build/generated/res/pngs/release
+org.opencv-resValues-1 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/build/generated/res/resValues/release
+org.opencv-mergeReleaseResources-2 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/build/intermediates/incremental/release/mergeReleaseResources/merged.dir
+org.opencv-mergeReleaseResources-3 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/build/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+org.opencv-release-4 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/build/intermediates/merged_res/release/mergeReleaseResources
+org.opencv-release-5 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/src/release/res
+org.opencv-android_gradle_lib-6 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/modules/java/android_sdk/android_gradle_lib/res

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.opencv.samples.opencv_mobilenet"
+    android:versionCode="341"
+    android:versionName="3.41" >
+
+    <uses-sdk
+        android:minSdkVersion="26"
+        android:targetSdkVersion="34" />
+
+    <!-- Allow to use a camera -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front.autofocus"
+        android:required="false" />
+
+    <application
+        android:extractNativeLibs="false"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+
+        <!-- //! [mobilenet_tutorial] -->
+        <activity
+            android:name="org.opencv.samples.opencv_mobilenet.MainActivity"
+            android:exported="true"
+            android:screenOrientation="landscape" > <!-- Screen orientation -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest> <!-- //! [mobilenet_tutorial] -->

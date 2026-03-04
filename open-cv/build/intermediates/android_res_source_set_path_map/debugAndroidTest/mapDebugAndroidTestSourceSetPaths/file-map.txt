@@ -1,5 +1,0 @@
-org.opencv.test.open-cv-updated_navigation_xml-0 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/open-cv/build/generated/updated_navigation_xml/debugAndroidTest
-org.opencv.test.open-cv-packageDebugAndroidTestResources-1 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/open-cv/build/intermediates/incremental/debugAndroidTest/packageDebugAndroidTestResources/merged.dir
-org.opencv.test.open-cv-packageDebugAndroidTestResources-2 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/open-cv/build/intermediates/incremental/debugAndroidTest/packageDebugAndroidTestResources/stripped.dir
-org.opencv.test.open-cv-debugAndroidTest-3 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/open-cv/build/intermediates/merged_res/debugAndroidTest/mergeDebugAndroidTestResources
-org.opencv.test.open-cv-debug-4 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/open-cv/build/intermediates/packaged_res/debug/packageDebugResources

@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "org.opencv.samples.imagemanipulations.image-manipulations-debug-4:/drawable_icon.png.flat",
+        "source": "org.opencv.samples.imagemanipulations.image-manipulations-image-manipulations-7:/drawable/icon.png"
+    },
+    {
+        "merged": "org.opencv.samples.imagemanipulations.image-manipulations-debug-4:/layout_image_manipulations_surface_view.xml.flat",
+        "source": "org.opencv.samples.imagemanipulations.image-manipulations-image-manipulations-7:/layout/image_manipulations_surface_view.xml"
+    }
+]

@@ -1,0 +1,72 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="org.opencv.samples.opencv_mobilenet"
+4    android:versionCode="341"
+5    android:versionName="3.41" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- Allow to use a camera -->
+12    <uses-permission android:name="android.permission.CAMERA" />
+12-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:21:5-64
+12-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:21:22-62
+13
+14    <uses-feature
+14-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:22:5-84
+15        android:name="android.hardware.camera"
+15-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:22:19-57
+16        android:required="false" />
+16-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:22:58-82
+17    <uses-feature
+17-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:23:5-94
+18        android:name="android.hardware.camera.autofocus"
+18-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:23:19-67
+19        android:required="false" />
+19-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:23:68-92
+20    <uses-feature
+20-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:24:5-90
+21        android:name="android.hardware.camera.front"
+21-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:24:19-63
+22        android:required="false" />
+22-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:24:64-88
+23    <uses-feature
+23-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:25:5-100
+24        android:name="android.hardware.camera.front.autofocus"
+24-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:25:19-73
+25        android:required="false" />
+25-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:25:74-98
+26
+27    <application
+27-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:5:5-18:19
+28        android:debuggable="true"
+29        android:extractNativeLibs="false"
+30        android:icon="@drawable/icon"
+30-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:7:9-38
+31        android:label="@string/app_name" >
+31-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:6:9-41
+32
+33        <!-- //! [mobilenet_tutorial] -->
+34        <activity
+34-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:9:9-17:20
+35            android:name="org.opencv.samples.opencv_mobilenet.MainActivity"
+35-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:11:19-47
+36            android:exported="true"
+36-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:10:19-42
+37            android:screenOrientation="landscape" > <!-- Screen orientation -->
+37-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:12:19-56
+38            <intent-filter>
+38-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:13:13-16:29
+39                <action android:name="android.intent.action.MAIN" />
+39-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:14:17-69
+39-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:14:25-66
+40
+41                <category android:name="android.intent.category.LAUNCHER" />
+41-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:15:17-77
+41-->/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/mobilenet-objdetect/gradle/AndroidManifest.xml:15:27-74
+42            </intent-filter>
+43        </activity>
+44    </application>
+45
+46</manifest> <!-- //! [mobilenet_tutorial] -->

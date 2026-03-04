@@ -1,0 +1,8 @@
+org.opencv.samples.qrdetection:id/front = 0x7f030002
+org.opencv.samples.qrdetection:id/back = 0x7f030001
+org.opencv.samples.qrdetection:drawable/icon = 0x7f020000
+org.opencv.samples.qrdetection:string/app_name = 0x7f040000
+org.opencv.samples.qrdetection:id/any = 0x7f030000
+org.opencv.samples.qrdetection:styleable/CameraBridgeViewBase = 0x7f050000
+org.opencv.samples.qrdetection:attr/show_fps = 0x7f010001
+org.opencv.samples.qrdetection:attr/camera_id = 0x7f010000

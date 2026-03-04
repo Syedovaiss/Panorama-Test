@@ -1,0 +1,12 @@
+org.opencv.samples.opencv_mobilenet:styleable/CameraBridgeViewBase = 0x7f070000
+org.opencv.samples.opencv_mobilenet:string/app_name = 0x7f060000
+org.opencv.samples.opencv_mobilenet:raw/mobilenet_iter_73000 = 0x7f050001
+org.opencv.samples.opencv_mobilenet:layout/activity_main = 0x7f040000
+org.opencv.samples.opencv_mobilenet:id/CameraView = 0x7f030000
+org.opencv.samples.opencv_mobilenet:id/front = 0x7f030003
+org.opencv.samples.opencv_mobilenet:id/any = 0x7f030001
+org.opencv.samples.opencv_mobilenet:id/back = 0x7f030002
+org.opencv.samples.opencv_mobilenet:drawable/icon = 0x7f020000
+org.opencv.samples.opencv_mobilenet:raw/deploy = 0x7f050000
+org.opencv.samples.opencv_mobilenet:attr/camera_id = 0x7f010000
+org.opencv.samples.opencv_mobilenet:attr/show_fps = 0x7f010001

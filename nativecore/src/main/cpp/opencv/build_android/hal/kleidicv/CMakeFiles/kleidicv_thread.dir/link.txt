@@ -1,0 +1,2 @@
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar qc ../../3rdparty/lib/arm64-v8a/libkleidicv_thread.a "CMakeFiles/kleidicv_thread.dir/__/__/3rdparty/kleidicv/kleidicv-0.5.0/kleidicv_thread/src/kleidicv_thread.cpp.o"
+/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib ../../3rdparty/lib/arm64-v8a/libkleidicv_thread.a

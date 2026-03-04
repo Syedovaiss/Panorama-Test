@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "org.opencv.samples.tutorial2.tutorial-2-mixedprocessing-debug-5:/drawable_icon.png.flat",
+        "source": "org.opencv.samples.tutorial2.tutorial-2-mixedprocessing-tutorial-2-mixedprocessing-7:/drawable/icon.png"
+    },
+    {
+        "merged": "org.opencv.samples.tutorial2.tutorial-2-mixedprocessing-debug-5:/layout_tutorial2_surface_view.xml.flat",
+        "source": "org.opencv.samples.tutorial2.tutorial-2-mixedprocessing-tutorial-2-mixedprocessing-7:/layout/tutorial2_surface_view.xml"
+    }
+]

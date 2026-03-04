@@ -1,0 +1,8 @@
+org.opencv.samples.puzzle15.15-puzzle-pngs-0 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/15-puzzle/build/generated/res/pngs/release
+org.opencv.samples.puzzle15.15-puzzle-resValues-1 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/15-puzzle/build/generated/res/resValues/release
+org.opencv.samples.puzzle15.15-puzzle-packageReleaseResources-2 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/15-puzzle/build/intermediates/incremental/release/packageReleaseResources/merged.dir
+org.opencv.samples.puzzle15.15-puzzle-packageReleaseResources-3 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/15-puzzle/build/intermediates/incremental/release/packageReleaseResources/stripped.dir
+org.opencv.samples.puzzle15.15-puzzle-release-4 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/15-puzzle/build/intermediates/merged_res/release/mergeReleaseResources
+org.opencv.samples.puzzle15.15-puzzle-release-5 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/15-puzzle/src/release/res
+org.opencv.samples.puzzle15.15-puzzle-release-6 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/build_android/opencv_android/opencv/build/intermediates/packaged_res/release/packageReleaseResources
+org.opencv.samples.puzzle15.15-puzzle-15-puzzle-7 /Users/syedovaisakhtar/AndroidStudioProjects/Panorama/nativecore/src/main/cpp/opencv/samples/android/15-puzzle/res

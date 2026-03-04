@@ -1,0 +1,6 @@
+R_DEF: Internal format may change without notice
+local
+drawable icon
+id tutorial2_activity_surface_view
+layout tutorial2_surface_view
+string app_name
