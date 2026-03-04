@@ -5,11 +5,8 @@ plugins {
 android {
     namespace = "com.ovais.nativecore"
     ndkVersion = "28.2.13676358"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 35 // Keep at 35, we'll fix the dependency instead if possible or increase if required.
+    // Actually, the error says it requires 36. Let's update to 36.
 
     defaultConfig {
         minSdk = 26
@@ -19,10 +16,13 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags += listOf("-std=c++20", "-O3")
+                // Pass the ABI to CMake to help it find the right libraries
+                arguments += "-DANDROID_ABI=arm64-v8a"
             }
         }
         ndk {
-            abiFilters += listOf("arm64-v8a", "armeabi-v7a")
+            // Only build for arm64-v8a since OpenCV libs for other ABIs are missing
+            abiFilters += listOf("arm64-v8a")
         }
     }
 
@@ -46,6 +46,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
+
+// Override compileSdk to 36 because androidx.core:core-ktx:1.17.0 requires it
+android.compileSdk = 36
 
 dependencies {
     implementation(libs.androidx.core.ktx)
