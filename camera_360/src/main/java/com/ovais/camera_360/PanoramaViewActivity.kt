@@ -11,6 +11,7 @@ import com.panoramagl.PLManager
 import com.panoramagl.PLSphericalPanorama
 
 class PanoramaViewActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityPanoramaViewBinding
     private var plManager: PLManager? = null
     private var bitmap: Bitmap? = null
