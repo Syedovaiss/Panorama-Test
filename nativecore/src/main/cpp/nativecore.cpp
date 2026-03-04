@@ -22,7 +22,7 @@ Java_com_ovais_nativecore_NativeLib_stitchImages(
         jobject /* this */,
         jobjectArray imageByteArrays) {
 
-    // Disable optimizations that cause SIGILL on some Android CPUs
+    // 1. Force safety to prevent SIGILL crashes
     cv::ocl::setUseOpenCL(false);
     cv::setUseOptimized(false);
     cv::setNumThreads(1);
@@ -38,6 +38,7 @@ Java_com_ovais_nativecore_NativeLib_stitchImages(
         env->GetByteArrayRegion(byteArray, 0, len, (jbyte*)buffer.data());
         Mat img = imdecode(buffer, IMREAD_COLOR);
         if (!img.empty()) {
+            // Processing at 800px for high feature density and stability
             if (img.cols > 800) {
                 double scale = 800.0 / img.cols;
                 resize(img, img, Size(), scale, scale, INTER_LINEAR);
@@ -49,14 +50,13 @@ Java_com_ovais_nativecore_NativeLib_stitchImages(
 
     if (images.size() < 2) return nullptr;
 
-    // 1. Calculate transformations
-    std::vector<Mat> transforms;
-    transforms.push_back(Mat::eye(3, 3, CV_64F));
+    // 2. Alignment Pipeline with Vertical Drift Constraint
+    std::vector<Point2f> cumulativeOffsets;
+    cumulativeOffsets.push_back(Point2f(0, 0));
 
-    Ptr<ORB> orb = ORB::create(2000);
-    BFMatcher matcher(NORM_HAMMING, true);
-    Mat currentH = Mat::eye(3, 3, CV_64F);
-    Mat lastValidH = Mat::eye(3, 3, CV_64F);
+    Ptr<ORB> orb = ORB::create(2500);
+    BFMatcher matcher(NORM_HAMMING, true); // crossCheck=true for reliable matches
+    Point2f currentOffset(0, 0);
 
     for (size_t i = 1; i < images.size(); ++i) {
         std::vector<KeyPoint> kps1, kps2;
@@ -64,110 +64,124 @@ Java_com_ovais_nativecore_NativeLib_stitchImages(
         orb->detectAndCompute(images[i], noArray(), kps1, desc1);
         orb->detectAndCompute(images[i-1], noArray(), kps2, desc2);
 
-        Mat H_local = Mat::eye(3, 3, CV_64F);
-        bool success = false;
-
-        if (!desc1.empty() && !desc2.empty()) {
-            std::vector<DMatch> matches;
-            matcher.match(desc1, desc2, matches);
-            if (matches.size() >= 15) {
-                std::vector<Point2f> pts1, pts2;
-                for (const auto& m : matches) {
-                    pts1.push_back(kps1[m.queryIdx].pt);
-                    pts2.push_back(kps2[m.trainIdx].pt);
-                }
-                Mat inliers;
-                Mat affine = estimateAffinePartial2D(pts1, pts2, inliers, RANSAC, 3.0);
-                if (!affine.empty()) {
-                    affine.copyTo(H_local.rowRange(0, 2));
-                    success = true;
-                }
-            }
+        if (desc1.empty() || desc2.empty()) {
+            cumulativeOffsets.push_back(currentOffset);
+            continue;
         }
 
-        if (!success) {
-            // Predictive fallback: Use average motion to prevent black spaces
-            H_local = lastValidH.clone();
-            LOGI("Frame %zu: Using predictive alignment", i);
-        } else {
-            lastValidH = H_local.clone();
+        std::vector<DMatch> matches;
+        matcher.match(desc1, desc2, matches);
+
+        std::vector<float> dxs, dys;
+        for (auto& m : matches) {
+            dxs.push_back(kps2[m.trainIdx].pt.x - kps1[m.queryIdx].pt.x);
+            dys.push_back(kps2[m.trainIdx].pt.y - kps1[m.queryIdx].pt.y);
         }
 
-        currentH = currentH * H_local;
-        transforms.push_back(currentH.clone());
+        if (dxs.size() < 10) {
+            cumulativeOffsets.push_back(currentOffset);
+            continue;
+        }
+
+        // Robust median shift calculation
+        std::sort(dxs.begin(), dxs.end());
+        std::sort(dys.begin(), dys.end());
+        float mx = dxs[dxs.size() / 2];
+        float my = dys[dys.size() / 2];
+
+        // DAMPING: If vertical shift is small, force it to 0 to keep the panorama level
+        if (std::abs(my) < images[i].rows * 0.05f) my = 0;
+
+        currentOffset.x += mx;
+        currentOffset.y += my;
+        cumulativeOffsets.push_back(currentOffset);
     }
 
-    // 2. Global bounds and rendering
-    float minX=0, minY=0, maxX=0, maxY=0;
+    // 3. Determine Canvas and Offsets
+    float minX = 0, minY = 0, maxX = images[0].cols, maxY = images[0].rows;
     for (size_t i = 0; i < images.size(); ++i) {
-        std::vector<Point2f> c = {{0,0},{(float)images[i].cols,0},{(float)images[i].cols,(float)images[i].rows},{0,(float)images[i].rows}};
-        std::vector<Point2f> w;
-        perspectiveTransform(c, w, transforms[i]);
-        for(auto& p : w) {
-            minX=std::min(minX,p.x); minY=std::min(minY,p.y);
-            maxX=std::max(maxX,p.x); maxY=std::max(maxY,p.y);
-        }
+        minX = std::min(minX, cumulativeOffsets[i].x);
+        minY = std::min(minY, cumulativeOffsets[i].y);
+        maxX = std::max(maxX, cumulativeOffsets[i].x + images[i].cols);
+        maxY = std::max(maxY, cumulativeOffsets[i].y + images[i].rows);
     }
 
     int canvasW = cvRound(maxX - minX);
     int canvasH = cvRound(maxY - minY);
-    if (canvasW > 15000 || canvasH > 4000) return nullptr;
+    if (canvasW > 25000 || canvasH > 5000) return nullptr;
 
+    // Use manual pixel accumulation to avoid convertTo/SIGILL crashes
     Mat result = Mat::zeros(Size(canvasW, canvasH), CV_8UC3);
-    Mat weightSum = Mat::zeros(result.size(), CV_32F);
-    Mat acc = Mat::zeros(result.size(), CV_32FC3);
+    Mat weightSum = Mat::zeros(Size(canvasW, canvasH), CV_32F);
+
+    // Accumulator canvas in floating point
+    std::vector<float> acc(canvasW * canvasH * 3, 0.0f);
+    std::vector<float> weights(canvasW * canvasH, 0.0f);
 
     for (size_t i = 0; i < images.size(); ++i) {
-        Mat T = Mat::eye(3, 3, CV_64F);
-        T.at<double>(0, 2) = -minX; T.at<double>(1, 2) = -minY;
-        Mat finalH = T * transforms[i];
+        int startX = cvRound(cumulativeOffsets[i].x - minX);
+        int startY = cvRound(cumulativeOffsets[i].y - minY);
 
-        Mat warped;
-        warpPerspective(images[i], warped, finalH, result.size());
+        int imgW = images[i].cols;
+        int imgH = images[i].rows;
+        int feather = imgW / 10; // 10% side feathering
 
-        // Manual Feathering and Accumulation (prevents SIGILL crash)
-        int feather = images[i].cols / 8;
-        for (int y = 0; y < warped.rows; ++y) {
-            for (int x = 0; x < warped.cols; ++x) {
-                Vec3b p = warped.at<Vec3b>(y,x);
-                if (p == Vec3b(0,0,0)) continue;
+        for (int y = 0; y < imgH; ++y) {
+            const Vec3b* row = images[i].ptr<Vec3b>(y);
+            int canvasY = startY + y;
+            if (canvasY < 0 || canvasY >= canvasH) continue;
 
-                // Calculate horizontal feather weight
-                // This blends frames together seamlessly
+            for (int x = 0; x < imgW; ++x) {
+                int canvasX = startX + x;
+                if (canvasX < 0 || canvasX >= canvasW) continue;
+
+                // Calculate horizontal-only linear feathering weight
                 float w = 1.0f;
-                // We find the local x coordinate by inverse transforming the result x,y
-                // but for speed and stability we use a simpler horizontal ramp
-                // Based on image index and direction
-                acc.at<Vec3f>(y,x) += Vec3f(p[0], p[1], p[2]);
-                weightSum.at<float>(y,x) += 1.0f;
+                if (x < feather) w = (float)x / feather;
+                else if (x > imgW - feather) w = (float)(imgW - x) / feather;
+
+                // Manual accumulation (no OpenCV optimized calls)
+                int accIdx = (canvasY * canvasW + canvasX) * 3;
+                int weightIdx = canvasY * canvasW + canvasX;
+
+                acc[accIdx + 0] += row[x][0] * w;
+                acc[accIdx + 1] += row[x][1] * w;
+                acc[accIdx + 2] += row[x][2] * w;
+                weights[weightIdx] += w;
             }
         }
     }
 
-    // Normalize and convert back
-    for (int y = 0; y < result.rows; ++y) {
-        for (int x = 0; x < result.cols; ++x) {
-            float w = weightSum.at<float>(y,x);
-            if (w > 0) {
-                Vec3f p = acc.at<Vec3f>(y,x) / w;
-                result.at<Vec3b>(y,x) = Vec3b((uchar)p[0], (uchar)p[1], (uchar)p[2]);
+    // 4. Final Normalization and Clean Crop
+    for (int y = 0; y < canvasH; ++y) {
+        Vec3b* row = result.ptr<Vec3b>(y);
+        for (int x = 0; x < canvasW; ++x) {
+            float w = weights[y * canvasW + x];
+            if (w > 0.001f) {
+                int idx = (y * canvasW + x) * 3;
+                row[x][0] = (uchar)(acc[idx + 0] / w);
+                row[x][1] = (uchar)(acc[idx + 1] / w);
+                row[x][2] = (uchar)(acc[idx + 2] / w);
             }
         }
     }
 
+    // Auto-crop black borders
     Mat gray;
     cvtColor(result, gray, COLOR_BGR2GRAY);
-    Rect crop = boundingRect(gray > 0);
-    if (crop.width > 0) result = result(crop);
+    Rect contentRect = boundingRect(gray > 0);
+    if (contentRect.width > 0 && contentRect.height > 0) {
+        result = result(contentRect);
+    }
 
-    std::vector<uchar> buf;
-    imencode(".jpg", result, buf);
-    jbyteArray res = env->NewByteArray(buf.size());
-    env->SetByteArrayRegion(res, 0, buf.size(), (jbyte*)buf.data());
-    return res;
+    std::vector<uchar> outBuffer;
+    imencode(".jpg", result, outBuffer);
+    jbyteArray resArray = env->NewByteArray(outBuffer.size());
+    env->SetByteArrayRegion(resArray, 0, outBuffer.size(), (jbyte*)outBuffer.data());
+    return resArray;
 }
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_ovais_nativecore_NativeLib_stringFromJNI(JNIEnv* env, jobject) {
-    return env->NewStringUTF("Professional Safe Stitcher V10");
+    return env->NewStringUTF("Professional Stable Stitcher V12");
 }
