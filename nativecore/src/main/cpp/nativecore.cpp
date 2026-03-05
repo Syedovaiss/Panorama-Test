@@ -206,8 +206,3 @@ Java_com_ovais_nativecore_NativeLib_stitchImages(
     env->SetByteArrayRegion(resArray, 0, out.size(), (jbyte*)out.data());
     return resArray;
 }
-
-extern "C" JNIEXPORT jstring JNICALL
-Java_com_ovais_nativecore_NativeLib_stringFromJNI(JNIEnv* env, jobject) {
-    return env->NewStringUTF("Professional UHD V30");
-}

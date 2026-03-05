@@ -6,7 +6,7 @@ import java.io.ByteArrayOutputStream
 
 object NativeLib {
 
-    interface StitchProgressListener {
+    fun interface StitchProgressListener {
         fun onProgressUpdate(message: String)
     }
 
@@ -14,11 +14,11 @@ object NativeLib {
         System.loadLibrary("nativecore")
     }
 
-    external fun stringFromJNI(): String
-    external fun testOpenCV(): String
-    
     // Updated to accept an optional listener
-    external fun stitchImages(imageByteArrays: Array<ByteArray>, listener: StitchProgressListener?): ByteArray?
+    external fun stitchImages(
+        imageByteArrays: Array<ByteArray>,
+        listener: StitchProgressListener?
+    ): ByteArray?
 
     fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
         val stream = ByteArrayOutputStream()
