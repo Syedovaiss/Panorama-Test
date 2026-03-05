@@ -9,6 +9,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -42,50 +43,51 @@ import com.ovais.nativecore.NativeLib
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.abs
-
-@OptIn(ExperimentalGetImage::class)
-class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
+class PanoramaCVActivity : ComponentActivity() {
 
     private lateinit var cameraExecutor: ExecutorService
-    private lateinit var sensorManager: SensorManager
-    private var rotationSensor: Sensor? = null
-    
+    private lateinit var rotationSensor: RotationSensor
+
     private val isRecording = mutableStateOf(false)
-    private var lastYaw = 0f
     private val capturedFrames = mutableStateListOf<Bitmap>()
     private var currentFrame: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Keep screen on
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         cameraExecutor = Executors.newSingleThreadExecutor()
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+
+        // Rotation sensor setup: frames only captured if recording
+        rotationSensor = RotationSensor(this) {
+            if (isRecording.value) {
+                currentFrame?.let { bitmap ->
+                    capturedFrames.add(bitmap)
+                }
+            }
+        }
 
         setContent {
             PanoramaCaptureScreen()
         }
     }
 
-    override fun onSensorChanged(event: SensorEvent) {
-        if (!isRecording.value || event.sensor.type != Sensor.TYPE_ROTATION_VECTOR) return
-
-        val rotationMatrix = FloatArray(9)
-        SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
-        val orientation = FloatArray(3)
-        SensorManager.getOrientation(rotationMatrix, orientation)
-
-        val yaw = Math.toDegrees(orientation[0].toDouble()).toFloat()
-        
-        // Capture frame every 3.5 degrees for dense overlap
-        if (abs(yaw - lastYaw) > 3.5f || capturedFrames.isEmpty()) {
-            currentFrame?.let {
-                capturedFrames.add(it)
-                lastYaw = yaw
-            }
-        }
+    override fun onResume() {
+        super.onResume()
+        rotationSensor.start()
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+    override fun onPause() {
+        super.onPause()
+        rotationSensor.stop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraExecutor.shutdown()
+    }
 
     @Composable
     fun PanoramaCaptureScreen() {
@@ -94,9 +96,16 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
         val previewView = remember { PreviewView(context) }
         val scrollState = rememberScrollState()
 
+        // CameraX setup
         LaunchedEffect(Unit) {
-            val cameraProvider = ProcessCameraProvider.getInstance(context).get()
-            val preview = Preview.Builder().build().also { it.setSurfaceProvider(previewView.surfaceProvider) }
+            val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
+            val cameraProvider = cameraProviderFuture.get()
+            cameraProvider.unbindAll() // remove old bindings
+
+            val preview = Preview.Builder().build().also {
+                it.setSurfaceProvider(previewView.surfaceProvider)
+            }
+
             val imageAnalysis = ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888)
@@ -107,17 +116,24 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                     val bitmap = YuvConverter.toBitmap(mediaImage)
                     val rotation = imageProxy.imageInfo.rotationDegrees
                     val matrix = Matrix().apply { postRotate(rotation.toFloat()) }
-                    // CRITICAL: Rotate the bitmap so it is upright. 
-                    // This fixes the "going upward" issue.
                     currentFrame = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
                 }
                 imageProxy.close()
             }
 
-            cameraProvider.bindToLifecycle(context as ComponentActivity, CameraSelector.DEFAULT_BACK_CAMERA, preview, imageAnalysis)
+            try {
+                cameraProvider.bindToLifecycle(
+                    context as ComponentActivity,
+                    CameraSelector.DEFAULT_BACK_CAMERA,
+                    preview,
+                    imageAnalysis
+                )
+            } catch (e: Exception) {
+                Toast.makeText(context, "Camera binding failed: ${e.message}", Toast.LENGTH_LONG).show()
+            }
         }
 
-        // Auto-scroll the filmstrip as frames are added
+        // Auto-scroll filmstrip
         LaunchedEffect(capturedFrames.size) {
             scrollState.animateScrollTo(scrollState.maxValue)
         }
@@ -130,7 +146,7 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Top Status
+                // Top status
                 Surface(
                     modifier = Modifier.padding(top = 48.dp),
                     color = Color.Black.copy(alpha = 0.5f),
@@ -145,7 +161,7 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                     )
                 }
 
-                // Middle: The "Live Captured Filmstrip" (iPhone-like preview)
+                // Filmstrip
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -167,20 +183,28 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                                 Image(
                                     bitmap = bitmap.asImageBitmap(),
                                     contentDescription = null,
-                                    modifier = Modifier.fillMaxHeight().width(60.dp).padding(horizontal = 1.dp),
+                                    modifier = Modifier
+                                        .fillMaxHeight()
+                                        .width(60.dp)
+                                        .padding(horizontal = 1.dp),
                                     contentScale = ContentScale.Crop
                                 )
                             }
                         }
-                        
-                        // Center Guide Line
-                        Box(modifier = Modifier.fillMaxHeight(0.8f).width(2.dp).background(Color.Yellow))
+
+                        // Center guide
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight(0.8f)
+                                .width(2.dp)
+                                .background(Color.Yellow)
+                        )
                     } else if (isRecording.value) {
                         Text("Move slowly to capture...", color = Color.White.copy(alpha = 0.7f))
                     }
                 }
 
-                // Bottom Controls
+                // Bottom controls
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -195,7 +219,7 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                                 if (!isRecording.value) {
                                     capturedFrames.clear()
                                     isRecording.value = true
-                                    lastYaw = 0f
+                                    rotationSensor.resetYaw()
                                 } else {
                                     isRecording.value = false
                                     if (capturedFrames.size > 1) {
@@ -208,7 +232,11 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                                                     PanoramaResultHolder.bitmap = result
                                                     startActivity(Intent(context, PanoramaResultActivity::class.java))
                                                 } else {
-                                                    Toast.makeText(context, "Stitching failed. Try rotating more slowly.", Toast.LENGTH_LONG).show()
+                                                    Toast.makeText(
+                                                        context,
+                                                        "Stitching failed. Try rotating more slowly.",
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
                                                 }
                                             }
                                         }
@@ -220,31 +248,11 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (isRecording.value) Color.Red else Color.White
                             ),
-                            contentPadding = PaddingValues(0.dp),
-                            border = if (isRecording.value) null else BorderStroke(4.dp, Color.LightGray)
-                        ) {
-                            if (isRecording.value) {
-                                Box(Modifier.size(30.dp).background(Color.White, RoundedCornerShape(4.dp)))
-                            }
-                        }
+                            contentPadding = PaddingValues(0.dp)
+                        ) {}
                     }
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        rotationSensor?.let { sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI) }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        sensorManager.unregisterListener(this)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cameraExecutor.shutdown()
     }
 }
