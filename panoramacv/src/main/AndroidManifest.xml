@@ -7,10 +7,10 @@
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!-- Optional: indicate that app requires camera -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,16 +18,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Panorama">
+
         <activity
             android:name=".PanoramaCVActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Panorama">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".PanoramaResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Panorama" />
+
     </application>
 
 </manifest>
