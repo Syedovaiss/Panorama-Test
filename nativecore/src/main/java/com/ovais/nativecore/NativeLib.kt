@@ -6,27 +6,29 @@ import java.io.ByteArrayOutputStream
 
 object NativeLib {
 
-    /**
-     * A native method that is implemented by the 'nativecore' native library,
-     * which is packaged with this application.
-     */
-    external fun stringFromJNI(): String
+    interface StitchProgressListener {
+        fun onProgressUpdate(message: String)
+    }
 
     init {
         System.loadLibrary("nativecore")
     }
 
+    external fun stringFromJNI(): String
     external fun testOpenCV(): String
-    external fun stitchImages(imageByteArrays: Array<ByteArray>): ByteArray?
+    
+    // Updated to accept an optional listener
+    external fun stitchImages(imageByteArrays: Array<ByteArray>, listener: StitchProgressListener?): ByteArray?
+
     fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
         val stream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
         return stream.toByteArray()
     }
 
-    fun stitchBitmaps(bitmaps: List<Bitmap>): Bitmap? {
+    fun stitchBitmaps(bitmaps: List<Bitmap>, listener: StitchProgressListener? = null): Bitmap? {
         val arrays = bitmaps.map { bitmapToByteArray(it) }.toTypedArray()
-        val stitchedBytes = stitchImages(arrays) ?: return null
+        val stitchedBytes = stitchImages(arrays, listener) ?: return null
         return BitmapFactory.decodeByteArray(stitchedBytes, 0, stitchedBytes.size)
     }
 }

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -23,6 +24,8 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import java.io.OutputStream
 
@@ -105,15 +108,31 @@ fun ZoomablePanorama(bitmap: Bitmap) {
     var scale by remember { mutableFloatStateOf(1f) }
     var offsetX by remember { mutableFloatStateOf(0f) }
     var offsetY by remember { mutableFloatStateOf(0f) }
+    var containerSize by remember { mutableStateOf(IntSize.Zero) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .onGloballyPositioned { layoutCoordinates ->
+                containerSize = layoutCoordinates.size
+            }
             .pointerInput(Unit) {
                 detectTransformGestures { _, pan, zoom, _ ->
-                    scale = (scale * zoom).coerceIn(1f, 10f)
-                    offsetX += pan.x
-                    offsetY += pan.y
+                    val newScale = (scale * zoom).coerceIn(1f, 10f)
+                    
+                    if (newScale > 1f) {
+                        // Dynamic bounds to prevent extreme panning and seeing black background
+                        val maxOffsetX = (containerSize.width.toFloat() * (newScale - 1f)) / 2f
+                        val maxOffsetY = (containerSize.height.toFloat() * (newScale - 1f)) / 2f
+                        
+                        offsetX = (offsetX + pan.x).coerceIn(-maxOffsetX, maxOffsetX)
+                        offsetY = (offsetY + pan.y).coerceIn(-maxOffsetY, maxOffsetY)
+                    } else {
+                        // Reset when at 1x
+                        offsetX = 0f
+                        offsetY = 0f
+                    }
+                    scale = newScale
                 }
             }
     ) {
