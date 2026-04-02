@@ -1,22 +1,24 @@
 cmake_minimum_required(VERSION 3.18)
 project(nativecore)
 
-# Set OpenCV_DIR to point to the build directory containing OpenCVConfig.cmake
-set(OpenCV_DIR ${CMAKE_CURRENT_SOURCE_DIR}/opencv/build_android)
-find_package(OpenCV REQUIRED)
+set(OPENCV_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../../../open-cv/native)
+set(OPENCV_INCLUDE_DIR ${OPENCV_ROOT}/jni/include)
 
 add_library(nativecore SHARED nativecore.cpp)
 
-# OpenCV_INCLUDE_DIRS is set by find_package
-target_include_directories(nativecore PRIVATE ${OpenCV_INCLUDE_DIRS})
+target_include_directories(nativecore PRIVATE ${OPENCV_INCLUDE_DIR})
 
-# Android log
 find_library(log-lib log)
+find_library(jnigraphics-lib jnigraphics)
 
-# Link libraries
-# ${OpenCV_LIBS} contains all the necessary OpenCV modules
+# Use the shared library provided in the open-cv module
+add_library(opencv_java4 SHARED IMPORTED)
+set_target_properties(opencv_java4 PROPERTIES IMPORTED_LOCATION
+    ${OPENCV_ROOT}/libs/${ANDROID_ABI}/libopencv_java4.so)
+
 target_link_libraries(
     nativecore
-    ${OpenCV_LIBS}
+    opencv_java4
     ${log-lib}
+    ${jnigraphics-lib}
 )

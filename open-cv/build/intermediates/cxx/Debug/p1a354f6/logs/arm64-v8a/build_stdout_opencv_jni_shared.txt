@@ -1,2 +1,2 @@
-ninja: Entering directory `/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/open-cv/.cxx/Debug/p1a354f6/arm64-v8a'
+ninja: Entering directory `/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/.cxx/Debug/p1a354f6/arm64-v8a'
 ninja: no work to do.

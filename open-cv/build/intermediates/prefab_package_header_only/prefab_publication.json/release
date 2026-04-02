@@ -1,5 +1,5 @@
 {
-  "installationFolder": "/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/open-cv/build/intermediates/prefab_package/release/prefab",
+  "installationFolder": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/build/intermediates/prefab_package/release/prefab",
   "gradlePath": ":open-cv",
   "packageInfo": {
     "packageName": "open-cv",
@@ -8,7 +8,7 @@
     "modules": [
       {
         "moduleName": "opencv_jni_shared",
-        "moduleHeaders": "/Users/syedovaisakhtar/AndroidStudioProjects/Panorama/open-cv/native/jni/include",
+        "moduleHeaders": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/native/jni/include",
         "moduleExportLibraries": [],
         "abis": []
       }

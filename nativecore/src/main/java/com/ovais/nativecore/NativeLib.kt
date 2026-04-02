@@ -11,7 +11,12 @@ object NativeLib {
     }
 
     init {
-        System.loadLibrary("nativecore")
+        try {
+            System.loadLibrary("opencv_java4")
+            System.loadLibrary("nativecore")
+        } catch (e: UnsatisfiedLinkError) {
+            e.printStackTrace()
+        }
     }
 
     // Updated to accept an optional listener

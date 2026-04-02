@@ -1,16 +1,16 @@
 {
   "info": {
-    "name": "arm64-v8a",
+    "name": "x86_64",
     "bitness": 64,
     "isDefault": true,
     "isDeprecated": false,
-    "architecture": "arm64",
-    "triple": "aarch64-linux-android",
-    "llvmTriple": "aarch64-none-linux-android"
+    "architecture": "x86_64",
+    "triple": "x86_64-linux-android",
+    "llvmTriple": "x86_64-none-linux-android"
   },
-  "cxxBuildFolder": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/.cxx/Debug/p1a354f6/arm64-v8a",
-  "soFolder": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/build/intermediates/cxx/Debug/p1a354f6/obj/arm64-v8a",
-  "soRepublishFolder": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/build/intermediates/cmake/debug/obj/arm64-v8a",
+  "cxxBuildFolder": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/.cxx/Debug/p1a354f6/x86_64",
+  "soFolder": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/build/intermediates/cxx/Debug/p1a354f6/obj/x86_64",
+  "soRepublishFolder": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/build/intermediates/cmake/debug/obj/x86_64",
   "abiPlatformVersion": 21,
   "cmake": {
     "effectiveConfiguration": {
@@ -27,7 +27,10 @@
     "variantName": "debug",
     "isDebuggableEnabled": true,
     "validAbiList": [
-      "arm64-v8a"
+      "armeabi-v7a",
+      "arm64-v8a",
+      "x86",
+      "x86_64"
     ],
     "buildTargetSet": [
       "opencv_jni_shared"
@@ -156,7 +159,6 @@
         "rootBuildGradleFolder": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test",
         "sdkFolder": "/Users/syedovaisakhtar/Library/Android/sdk",
         "isBuildOnlyTargetAbiEnabled": true,
-        "ideBuildTargetAbi": "arm64-v8a",
         "isCmakeBuildCohabitationEnabled": false,
         "isPrefabEnabled": false
       },
@@ -173,7 +175,7 @@
   "buildSettings": {
     "environmentVariables": []
   },
-  "prefabFolder": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/.cxx/Debug/p1a354f6/prefab/arm64-v8a",
+  "prefabFolder": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/.cxx/Debug/p1a354f6/prefab/x86_64",
   "isActiveAbi": true,
   "fullConfigurationHash": "p1a354f6f2xv151c6s173b563f3v2o23356n1q696y2j4kb663a5b246bq1d",
   "fullConfigurationHashKey": "# Values used to calculate the hash in this folder name.\n# Should not depend on the absolute path of the project itself.\n#   - AGP: 9.0.1.\n#   - $NDK is the path to NDK 28.2.13676358.\n#   - $PROJECT is the path to the parent folder of the root Gradle build file.\n#   - $ABI is the ABI to be built with. The specific value doesn\u0027t contribute to the value of the hash.\n#   - $HASH is the hash value computed from this text.\n#   - $CMAKE is the path to CMake 3.22.1.\n#   - $NINJA is the path to Ninja.\n-H$PROJECT/open-cv/libcxx_helper\n-DCMAKE_SYSTEM_NAME\u003dAndroid\n-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON\n-DCMAKE_SYSTEM_VERSION\u003d21\n-DANDROID_PLATFORM\u003dandroid-21\n-DANDROID_ABI\u003d$ABI\n-DCMAKE_ANDROID_ARCH_ABI\u003d$ABI\n-DANDROID_NDK\u003d$NDK\n-DCMAKE_ANDROID_NDK\u003d$NDK\n-DCMAKE_TOOLCHAIN_FILE\u003d$NDK/build/cmake/android.toolchain.cmake\n-DCMAKE_MAKE_PROGRAM\u003d$NINJA\n-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d$PROJECT/open-cv/build/intermediates/cxx/Debug/$HASH/obj/$ABI\n-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003d$PROJECT/open-cv/build/intermediates/cxx/Debug/$HASH/obj/$ABI\n-DCMAKE_BUILD_TYPE\u003dDebug\n-B$PROJECT/open-cv/.cxx/Debug/$HASH/$ABI\n-GNinja\n-DANDROID_STL\u003dc++_shared",
@@ -183,19 +185,19 @@
     "-DCMAKE_EXPORT_COMPILE_COMMANDS\u003dON",
     "-DCMAKE_SYSTEM_VERSION\u003d21",
     "-DANDROID_PLATFORM\u003dandroid-21",
-    "-DANDROID_ABI\u003darm64-v8a",
-    "-DCMAKE_ANDROID_ARCH_ABI\u003darm64-v8a",
+    "-DANDROID_ABI\u003dx86_64",
+    "-DCMAKE_ANDROID_ARCH_ABI\u003dx86_64",
     "-DANDROID_NDK\u003d/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358",
     "-DCMAKE_ANDROID_NDK\u003d/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358",
     "-DCMAKE_TOOLCHAIN_FILE\u003d/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/build/cmake/android.toolchain.cmake",
     "-DCMAKE_MAKE_PROGRAM\u003d/Users/syedovaisakhtar/Library/Android/sdk/cmake/3.22.1/bin/ninja",
-    "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/build/intermediates/cxx/Debug/p1a354f6/obj/arm64-v8a",
-    "-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003d/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/build/intermediates/cxx/Debug/p1a354f6/obj/arm64-v8a",
+    "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY\u003d/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/build/intermediates/cxx/Debug/p1a354f6/obj/x86_64",
+    "-DCMAKE_RUNTIME_OUTPUT_DIRECTORY\u003d/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/build/intermediates/cxx/Debug/p1a354f6/obj/x86_64",
     "-DCMAKE_BUILD_TYPE\u003dDebug",
-    "-B/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/.cxx/Debug/p1a354f6/arm64-v8a",
+    "-B/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/.cxx/Debug/p1a354f6/x86_64",
     "-GNinja",
     "-DANDROID_STL\u003dc++_shared"
   ],
-  "stlLibraryFile": "/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so",
+  "stlLibraryFile": "/Users/syedovaisakhtar/Library/Android/sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/x86_64-linux-android/libc++_shared.so",
   "intermediatesParentFolder": "/Users/syedovaisakhtar/Documents/projects/Panorama-Test/open-cv/build/intermediates/cxx/Debug/p1a354f6"
 }

@@ -5,11 +5,7 @@ plugins {
 
 android {
     namespace = "com.ovais.panoramacv"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.ovais.panoramacv"
@@ -63,4 +59,5 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
     implementation(project(":nativecore"))
+    implementation(project(":open-cv"))
 }
