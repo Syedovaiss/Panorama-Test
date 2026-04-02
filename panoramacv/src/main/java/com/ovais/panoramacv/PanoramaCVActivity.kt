@@ -1,7 +1,8 @@
 package com.ovais.panoramacv
 
-import android.content.Context
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.hardware.Sensor
@@ -11,7 +12,9 @@ import android.hardware.SensorManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalGetImage
@@ -24,6 +27,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -49,6 +53,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -69,6 +74,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.scale
 import com.ovais.nativecore.NativeLib
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -91,11 +98,59 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         cameraExecutor = Executors.newSingleThreadExecutor()
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
 
         setContent {
-            PanoramaCaptureScreen()
+            MaterialTheme(colorScheme = darkColorScheme()) {
+                Surface(modifier = Modifier.fillMaxSize(), color = Color.Black) {
+                    CameraPermissionWrapper {
+                        PanoramaCaptureScreen()
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun CameraPermissionWrapper(content: @Composable () -> Unit) {
+        val context = LocalContext.current
+        var hasPermission by remember {
+            mutableStateOf(
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.CAMERA
+                ) == PackageManager.PERMISSION_GRANTED
+            )
+        }
+
+        val launcher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            hasPermission = isGranted
+            if (!isGranted) {
+                Toast.makeText(context, "Camera permission is required for panorama", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        LaunchedEffect(Unit) {
+            if (!hasPermission) {
+                launcher.launch(Manifest.permission.CAMERA)
+            }
+        }
+
+        if (hasPermission) {
+            content()
+        } else {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("Camera Access Required", color = Color.White, style = MaterialTheme.typography.headlineSmall)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Button(onClick = { launcher.launch(Manifest.permission.CAMERA) }) {
+                        Text("Grant Permission")
+                    }
+                }
+            }
         }
     }
 
@@ -143,7 +198,7 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                         val rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
                         
                         // Small thumb for UI performance
-                        val thumb = Bitmap.createScaledBitmap(rotatedBitmap, rotatedBitmap.width / 8, rotatedBitmap.height / 8, true)
+                        val thumb = rotatedBitmap.scale(rotatedBitmap.width / 8, rotatedBitmap.height / 8)
                         
                         runOnUiThread {
                             capturedFrames.add(rotatedBitmap)
@@ -311,8 +366,9 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
         Dialog(onDismissRequest = onDismiss) {
             Surface(
                 shape = RoundedCornerShape(24.dp),
-                color = MaterialTheme.colorScheme.surface,
-                tonalElevation = 8.dp
+                color = Color(0xFF1E1E1E), // Explicit dark surface
+                tonalElevation = 8.dp,
+                border = BorderStroke(1.dp, Color.White.copy(alpha = 0.1f))
             ) {
                 Column(
                     modifier = Modifier
@@ -332,7 +388,8 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                         text = "Tips for Perfect Panoramas",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        color = Color.White
                     )
                     
                     Spacer(modifier = Modifier.height(20.dp))
@@ -352,7 +409,8 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 6.dp),
-                            textAlign = TextAlign.Start
+                            textAlign = TextAlign.Start,
+                            color = Color.White.copy(alpha = 0.8f)
                         )
                     }
                     
@@ -361,7 +419,11 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                     Button(
                         onClick = onDismiss,
                         modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp)
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.White,
+                            contentColor = Color.Black
+                        )
                     ) {
                         Text("GOT IT", fontWeight = FontWeight.Bold)
                     }
@@ -375,21 +437,22 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
         Dialog(onDismissRequest = {}) {
             Surface(
                 shape = RoundedCornerShape(28.dp),
-                color = MaterialTheme.colorScheme.surface,
-                tonalElevation = 6.dp
+                color = Color(0xFF1E1E1E),
+                tonalElevation = 6.dp,
+                border = BorderStroke(1.dp, Color.White.copy(alpha = 0.1f))
             ) {
                 Column(
                     modifier = Modifier.padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(color = Color.White)
                     Spacer(modifier = Modifier.height(24.dp))
                     Text(
                         text = message,
                         style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = Color.White
                     )
                 }
             }
