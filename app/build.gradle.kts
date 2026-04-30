@@ -45,10 +45,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":panorama_strip"))
-    implementation(project(":camera_360"))
+//    implementation(project(":panorama_strip"))
+//    implementation(project(":camera_360"))
     implementation(project(":open-cv"))
-
+    implementation(project(":panoramacv"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

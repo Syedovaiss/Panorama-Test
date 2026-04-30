@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    `maven-publish`
 }
 
 android {
@@ -42,6 +43,26 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "com.ovais.nativecore"
+            artifactId = "nativecore"
+            version = "1.0.0"
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
     }
 }
 

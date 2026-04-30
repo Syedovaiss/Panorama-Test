@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
 
     <!-- Optional: indicate that app requires camera -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -28,10 +28,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Panorama">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         <activity
@@ -39,7 +36,7 @@
             android:exported="true"
             android:label="Video Panorama"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Panorama"></activity>
+            android:theme="@style/Theme.Panorama" />
         <activity
             android:name=".LivePanoramaActivity"
             android:exported="true"
@@ -54,8 +51,23 @@
             android:exported="true"
             android:label="Basic Capture"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.Panorama"></activity>
+
+        <activity
+            android:name="com.ovais.panoramacv.PanoramaCVActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Panorama">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.ovais.panoramacv.PanoramaResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Panorama" />
     </application>
 
 </manifest>

@@ -10,16 +10,22 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.Size
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
+import androidx.camera.core.AspectRatio
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
+import androidx.camera.core.impl.ImageOutputConfig.OPTION_MAX_RESOLUTION
+import androidx.camera.core.resolutionselector.AspectRatioStrategy
+import androidx.camera.core.resolutionselector.ResolutionSelector
+import androidx.camera.core.resolutionselector.ResolutionStrategy
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.animation.AnimatedVisibility
@@ -80,6 +86,7 @@ import com.ovais.nativecore.NativeLib
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalGetImage::class)
 class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
@@ -87,13 +94,21 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var sensorManager: SensorManager
     private var rotationSensor: Sensor? = null
-    
+
     private val isRecording = mutableStateOf(false)
     private var currentYaw = 0f
     private var lastCapturedYaw = 0f
     private val capturedFrames = mutableStateListOf<Bitmap>()
     private val thumbFrames = mutableStateListOf<Bitmap>() // For smooth UI
     private var hasNewFrameRequest = false
+
+    val maxFrames = 60
+    val targetFramesToProcess = 21
+    val captureDegree = 360/maxFrames
+
+    val res720p = Size(1280, 720)
+    val res1080p = Size(1920, 1080)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -163,9 +178,8 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
         SensorManager.getOrientation(rotationMatrix, orientation)
 
         currentYaw = Math.toDegrees(orientation[0].toDouble()).toFloat()
-        
-        // request a new frame every 6.0 degrees to reduce frame count
-        if (capturedFrames.isEmpty() || abs(currentYaw - lastCapturedYaw) > 6.0f) {
+
+        if (capturedFrames.isEmpty() || abs(currentYaw - lastCapturedYaw) > captureDegree) {
             hasNewFrameRequest = true
         }
     }
@@ -178,13 +192,35 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
         var isStitching by remember { mutableStateOf(false) }
         var showTips by remember { mutableStateOf(true) }
         var processingMessage by remember { mutableStateOf("Initializing...") }
-        val previewView = remember { PreviewView(context) }
+        val previewView = remember { PreviewView(context).also {
+            it.scaleType = PreviewView.ScaleType.FIT_CENTER
+        } }
         val scrollState = rememberScrollState()
 
         LaunchedEffect(Unit) {
             val cameraProvider = ProcessCameraProvider.getInstance(context).get()
-            val preview = Preview.Builder().build().also { it.setSurfaceProvider(previewView.surfaceProvider) }
+            val resolutionSelector = ResolutionSelector.Builder()
+                .setAspectRatioStrategy(
+                    AspectRatioStrategy(
+                        AspectRatio.RATIO_4_3,
+                        AspectRatioStrategy.FALLBACK_RULE_AUTO
+                    )
+                )
+                .setResolutionStrategy(
+                    ResolutionStrategy(
+                        res1080p,
+                        ResolutionStrategy.FALLBACK_RULE_CLOSEST_LOWER
+                    )
+                )
+                .build()
+            val preview = Preview.Builder()
+                .setResolutionSelector(resolutionSelector)
+                .build().also {
+                it.surfaceProvider = previewView.surfaceProvider
+            }
+
             val imageAnalysis = ImageAnalysis.Builder()
+                .setResolutionSelector(resolutionSelector)
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888)
                 .build()
@@ -196,10 +232,10 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                         val rotation = imageProxy.imageInfo.rotationDegrees
                         val matrix = Matrix().apply { postRotate(rotation.toFloat()) }
                         val rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-                        
+
                         // Small thumb for UI performance
                         val thumb = rotatedBitmap.scale(rotatedBitmap.width / 8, rotatedBitmap.height / 8)
-                        
+
                         runOnUiThread {
                             capturedFrames.add(rotatedBitmap)
                             thumbFrames.add(thumb)
@@ -227,7 +263,9 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
             ProcessingDialog(message = processingMessage)
         }
 
-        Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)) {
             AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
 
             Column(
@@ -285,14 +323,17 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                                         contentDescription = null,
                                         modifier = Modifier
                                             .fillMaxHeight()
-                                            .width(35.dp) 
+                                            .width(35.dp)
                                             .padding(horizontal = 0.5.dp),
                                         contentScale = ContentScale.Crop
                                     )
                                 }
                             }
                             // Indicator line
-                            Box(modifier = Modifier.fillMaxHeight(0.6f).width(2.dp).background(Color.Yellow))
+                            Box(modifier = Modifier
+                                .fillMaxHeight(0.6f)
+                                .width(2.dp)
+                                .background(Color.Yellow))
                         }
                     }
 
@@ -317,20 +358,30 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                                     if (capturedFrames.size > 1) {
                                         isStitching = true
                                         cameraExecutor.execute {
-                                            // SMART PRUNING: Limit to max 60 high-quality frames for speed
-                                            val framesToStitch = if (capturedFrames.size > 60) {
-                                                val step = capturedFrames.size / 60
-                                                capturedFrames.filterIndexed { index, _ -> index % step == 0 }.take(60)
+                                            // SMART PRUNING: Limit to max $maxFrames high-quality frames for speed
+                                            val framesToStitch = if (capturedFrames.size > maxFrames) {
+                                                val step = capturedFrames.size / maxFrames
+                                                capturedFrames.filterIndexed { index, _ -> index % step == 0 }.take(maxFrames)
                                             } else {
                                                 capturedFrames.toList()
                                             }
 
-                                            val result = NativeLib.stitchBitmaps(framesToStitch, object : NativeLib.StitchProgressListener {
-                                                override fun onProgressUpdate(message: String) {
-                                                    runOnUiThread { processingMessage = message }
+                                            val lastIndex = capturedFrames.lastIndex
+                                            val step = lastIndex.toDouble() / (targetFramesToProcess - 1)
+
+
+                                            val reduced = (0 until targetFramesToProcess).map { i ->
+                                                val index = (i * step).roundToInt()
+                                                capturedFrames[index]
+                                            }
+
+
+                                            val result = NativeLib.stitchBitmaps(reduced) { message ->
+                                                runOnUiThread {
+                                                    processingMessage = message
                                                 }
-                                            })
-                                            
+                                            }
+
                                             runOnUiThread {
                                                 isStitching = false
                                                 if (result != null) {
@@ -352,7 +403,9 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                             contentPadding = PaddingValues(0.dp)
                         ) {
                             if (isRecording.value) {
-                                Box(Modifier.size(28.dp).background(Color.White, RoundedCornerShape(4.dp)))
+                                Box(Modifier
+                                    .size(28.dp)
+                                    .background(Color.White, RoundedCornerShape(4.dp)))
                             }
                         }
                     }
@@ -381,9 +434,9 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                         fontSize = 48.sp,
                         textAlign = TextAlign.Center
                     )
-                    
+
                     Spacer(modifier = Modifier.height(16.dp))
-                    
+
                     Text(
                         text = "Tips for Perfect Panoramas",
                         style = MaterialTheme.typography.headlineSmall,
@@ -391,9 +444,9 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                         textAlign = TextAlign.Center,
                         color = Color.White
                     )
-                    
+
                     Spacer(modifier = Modifier.height(20.dp))
-                    
+
                     val tips = listOf(
                         "📱 Hold your phone vertically (Portrait mode).",
                         "🔄 Rotate your entire body slowly and steadily.",
@@ -401,7 +454,7 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                         "🚶 Move only once around—don't overlap circles.",
                         "✨ Avoid moving objects like people or cars."
                     )
-                    
+
                     tips.forEach { tip ->
                         Text(
                             text = tip,
@@ -413,9 +466,9 @@ class PanoramaCVActivity : ComponentActivity(), SensorEventListener {
                             color = Color.White.copy(alpha = 0.8f)
                         )
                     }
-                    
+
                     Spacer(modifier = Modifier.height(24.dp))
-                    
+
                     Button(
                         onClick = onDismiss,
                         modifier = Modifier.fillMaxWidth(),

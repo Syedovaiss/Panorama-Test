@@ -33,9 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ovais.camera_360.Camera360Activity
 import com.ovais.panorama.ui.theme.PanoramaTheme
-import com.ovais.panorama_strip.PanoramaStripActivity
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -61,11 +59,12 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding),
                         onFeatureClick = { feature ->
                             when (feature) {
-                                Feature.StripPanorama -> startActivity(Intent(this, PanoramaStripActivity::class.java))
-                                Feature.Sensor360 -> startActivity(Intent(this, Camera360Activity::class.java))
+//                                Feature.StripPanorama -> startActivity(Intent(this, PanoramaStripActivity::class.java))
+//                                Feature.Sensor360 -> startActivity(Intent(this, Camera360Activity::class.java))
                                 Feature.LiveStitch -> startActivity(Intent(this, LivePanoramaActivity::class.java))
                                 Feature.VideoStitch -> startActivity(Intent(this, CaptureVideoPanoramaActivity::class.java))
                                 Feature.TestPanorama -> startActivity(Intent(this, TestPanoramaActivity::class.java))
+                                else -> Unit
                             }
                         }
                     )

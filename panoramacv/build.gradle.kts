@@ -1,19 +1,18 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
 }
 
 android {
     namespace = "com.ovais.panoramacv"
-    compileSdk = 36
+    compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
 
     defaultConfig {
-        applicationId = "com.ovais.panoramacv"
         minSdk = 26
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -53,6 +52,11 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
 
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+
     // CameraX
     implementation(libs.androidx.camera.core)
     implementation(libs.androidx.camera.camera2)
@@ -60,4 +64,6 @@ dependencies {
     implementation(libs.androidx.camera.view)
     implementation(project(":nativecore"))
     implementation(project(":open-cv"))
+
+
 }
